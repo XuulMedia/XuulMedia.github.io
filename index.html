@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="module">
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.esm.browser.js'
+  </script>
+  <script type="module" src="/js/traits.js" defer></script>
+  <script type="module" src="/js/actions.js" defer></script>
+  <script type="module" src="/js/parts.js" defer ></script>
+  <script type="module" src="/js/app.js" defer></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>Reaper Generator</h2>
+    <input type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
+    <label for="Toggle Soul" >Enable Soul?</label>
+    <select v-model="challengeRating" v-bind:disabled="rolled"id="crLevel">
+        <option value="1">01</option>
+        <option value="2">02</option>
+        <option value="3">03</option>
+        <option value="4">04</option>
+        <option selected="5">05</option>
+        <option value="6">06</option>
+        <option value="7">07</option>
+        <option value="8">08</option>
+        <option value="9">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+      </select>
+      <label for="challengeRating">Player Level</label>
+
+
+    <button v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
+    <button v-on:click="confirmTheRoll" v-bind:disabled="!firstRoll">Confirm Roll</button>
+    <button v-bind:disabled="!rolled">Generate Reaper</button>
+    <button>Reset</button>
+
+    <br>
+    <table>
+      <tr>
+        <td>Stat</td>
+        <td>Value</td>
+        <td>Override?</td>
+      </tr>
+      <tr>
+        <td>STR</td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="str"v-bind:disabled="!overrideStr"> {{str}} </td>
+        <td><input type="checkbox" v-model="overrideStr"v-bind:disabled="rolled"></td>
+      </tr>
+      <tr>
+        <td>DEX</td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="dex"v-bind:disabled="!overrideDex"> {{dex}} </td>
+        <td><input type="checkbox" v-model="overrideDex"v-bind:disabled="rolled"></td>
+      </tr>
+      <tr>
+        <td>CON</td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="con"v-bind:disabled="!overrideCon"> {{con}} </td>
+        <td><input type="checkbox" v-model="overrideCon"v-bind:disabled="rolled"></td>
+      </tr>
+      <tr>
+        <td>INT</td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="int"v-bind:disabled="!overrideInt"> {{int}} </td>
+        <td><input type="checkbox" v-model="overrideInt"v-bind:disabled="rolled"> </td>
+      </tr>
+      <tr>
+        <td>WIS</td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="wis"v-bind:disabled="!overrideWis"> {{wis}} </td>
+        <td><input type="checkbox" v-model="overrideWis"v-bind:disabled="rolled"> </td>
+      </tr>
+      <tr>
+        <td>CHA</td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="cha"v-bind:disabled="!overrideCha"> {{cha}} </td>
+        <td><input type="checkbox" v-model="overrideCha"v-bind:disabled="rolled"> </td>
+      </tr>
+      <tr v-if='soul'>
+        <td>SOL</td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="sol"v-bind:disabled="!overrideSol"> {{sol}} </td>
+        <td><input type="checkbox" v-model="overrideSol"v-bind:disabled="rolled"> </td>
+      </tr>
+    </table>
+
+
+    <p>{{ size }} HP {{ HP }} AC {{ AC}} </p>
+    <p> str = {{str}} {{strMod}} </p>
+    <p> dex = {{dex}} {{dexMod}} </p>
+    <p> con = {{con}} {{conMod}} </p>
+    <p> int = {{int}} {{intMod}} </p>
+    <p> wis = {{wis}} {{wisMod}} </p>
+    <p> cha = {{cha}} {{chaMod}} </p>
+    <p v-if='soul'> sol = {{sol}} {{solMod}} </p>
+  </div>
+</body>
+
+</html>
