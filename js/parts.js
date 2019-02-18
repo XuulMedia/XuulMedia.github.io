@@ -10,36 +10,7 @@ class Part {
   constructor(type, name, requirementType, requirementAmount, trait, action) {
     this.type = capitalize(type)
     this.name = capitalize(name);
-
-    this.requirementType = function () {
-      let req
-      switch (requirementType) {
-        case 'STR':
-          req = requirementType.toUpperCase();
-          break
-        case 'DEX':
-          req = requirementType.toUpperCase();
-          break
-        case 'CON':
-          req = requirementType.toUpperCase();
-          break
-        case 'INT':
-          req = requirementType.toUpperCase();
-          break
-        case 'WIS':
-          req = requirementType.toUpperCase();
-          break
-        case 'CHA':
-          req = requirementType.toUpperCase();
-          break
-        case 'SOL':
-          req = requirementType.toUpperCase();
-          break
-        default:
-          console.log('Invalid requirement for ' + this.name + '' + this.type)
-      }
-      return req
-    }
+    this.requirementType = requirementType
     this.requirementAmount = requirementAmount
     this.traits = trait
     this.action = action
@@ -198,6 +169,19 @@ demonLegs       : new Part('Legs', 'Demonic', 'STR', 1 , [null], [null]),
 }
 
 
+// const partCategorizer = function(partType){
+//   let arr = []
+//   let keys = Object.keys(allParts)
+//   for (let index = 0; index < keys.length; index++) {
+//     const element = keys[index];
+//     console.log(allParts[element].type)
+//     if (allParts[element].type == partType){
+//       arr.push(allParts[element])
+//     }
+//   }
+//   return arr
+// }
+// let allHeads = partCategorizer('Head')
 
 
 export default allParts

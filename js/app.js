@@ -11,6 +11,18 @@ const calcAttributeMod = function (val) {
   return score;
 }
 
+const partCategorizer = function (partType) {
+  let arr = []
+  let keys = Object.keys(allParts)
+  for (let index = 0; index < keys.length; index++) {
+    const element = keys[index];
+    if (allParts[element].type == partType) {
+      arr.push(allParts[element])
+    }
+  }
+  return arr
+}
+
 
 
 const app = new Vue({
@@ -32,26 +44,28 @@ const app = new Vue({
     overrideCha: false,
     overrideSol: false,
 
-    str: { set: function () { return this._str } },
-    dex: { set: function () { return this._dex } },
-    con: { set: function () { return this._con } },
-    int: { set: function () { return this._int } },
-    wis: { set: function () { return this._wis } },
-    cha: { set: function () { return this._cha } },
-    sol: { set: function () { return this._sol } },
+    // str: { set: function () { return this._str } },
+    // dex: { set: function () { return this._dex } },
+    // con: { set: function () { return this._con } },
+    // int: { set: function () { return this._int } },
+    // wis: { set: function () { return this._wis } },
+    // cha: { set: function () { return this._cha } },
+    // sol: { set: function () { return this._sol } },
+
+    str: 20,
+    dex: 20,
+    con: 20,
+    int: 20,
+    wis: 20,
+    cha: 20,
+    sol: 20,
 
 
 
 
   },
   computed: {
-    _str: function () { return dice(20) },
-    _dex: function () { return dice(20) },
-    _con: function () { return dice(20) },
-    _int: function () { return dice(20) },
-    _wis: function () { return dice(20) },
-    _cha: function () { return dice(20) },
-    _sol: function () { return dice(20) },
+   
 
     strMod: function () { return calcAttributeMod(this.str) },
     dexMod: function () { return calcAttributeMod(this.dex) },
@@ -60,8 +74,6 @@ const app = new Vue({
     wisMod: function () { return calcAttributeMod(this.wis) },
     chaMod: function () { return calcAttributeMod(this.cha) },
     solMod: function () { return calcAttributeMod(this.sol) },
-
-
 
     size: () => {
       let roll = dice(6);
@@ -132,6 +144,14 @@ const app = new Vue({
 
   },
   methods: {
+    _str: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+    _dex: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+    _con: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+    _int: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+    _wis: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+    _cha: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+    _sol: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+
     toggleSoul: function () {
       soul = !soul
     },
@@ -143,20 +163,27 @@ const app = new Vue({
     },
     rollTheDice: function () {
       this.firstRoll = true
-      if(this.overrideStr == false || this.str <= 0 || this.str == ""){
-        this.str = dice(20)}
-      if(this.overrideDex == false || this.dex <= 0 || this.dex == "" ) {
-        this.dex = dice(20)}
-      if(this.overrideCon == false || this.con <= 0 || this.con == "" ) {
-        this.con = dice(20)}
-      if(this.overrideInt == false || this.int <= 0 || this.int == "" ) {
-        this.int = dice(20)}
-      if(this.overrideWis == false || this.wis <= 0 || this.wis == "" ) {
-        this.wis = dice(20)}
-      if(this.overrideCha == false || this.cha <= 0 || this.cha == "" ) {
-        this.cha = dice(20)}
-      if(this.overrideSol == false || this.sol <= 0 || this.sol == "" ) {
-        this.sol = dice(20)}
+      if (this.overrideStr == false || this.str <= 0 || this.str == "") {
+        this.str = dice(20)
+      }
+      if (this.overrideDex == false || this.dex <= 0 || this.dex == "") {
+        this.dex = dice(20)
+      }
+      if (this.overrideCon == false || this.con <= 0 || this.con == "") {
+        this.con = dice(20)
+      }
+      if (this.overrideInt == false || this.int <= 0 || this.int == "") {
+        this.int = dice(20)
+      }
+      if (this.overrideWis == false || this.wis <= 0 || this.wis == "") {
+        this.wis = dice(20)
+      }
+      if (this.overrideCha == false || this.cha <= 0 || this.cha == "") {
+        this.cha = dice(20)
+      }
+      if (this.overrideSol == false || this.sol <= 0 || this.sol == "") {
+        this.sol = dice(20)
+      }
     },
 
     confirmTheRoll: function () {
@@ -171,6 +198,67 @@ const app = new Vue({
       this.overrideSol = false
     },
 
+    selectPart: function (allPartArray, number) {
+      let selection = []
+      let selectionPool = []
+      allPartArray.forEach(indexNum => {
+        let testLevel
+        switch (indexNum.requirementType) {
+          case 'STR':
+            testLevel = app.str
+            break
+          case 'DEX':
+            testLevel = app.dex
+            break
+          case 'CON':
+            testLevel = app.con
+            break
+          case 'INT':
+            testLevel = app.int
+            break
+          case 'WIS':
+            testLevel = app.wis
+            break
+          case 'CHA':
+            testLevel = app.cha
+            break
+          case 'SOL':
+            testLevel = app.sol
+            break
+        }
+        if (testLevel = indexNum.requirementAmount) {
+          selectionPool.push(indexNum)
+        }
+      })
+      
+      if(number) {
+          switch(number){
+            case 1:
+              selection = [selectionPool[dice(selectionPool.length - 1)]]
+              break
+            case 2:
+              selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+              break
+            case 3:
+              selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+              break
+            case 4:
+              selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+              break
+            default:
+              selection = [selectionPool[dice(selectionPool.length - 1)]]
+              break
+          }
+        } else {
+          selection = [selectionPool[dice(selectionPool.length - 1)]]
+        }
+      
+    
+        return selection
+      },
+
+    
+
 
 
 
@@ -182,3 +270,71 @@ const app = new Vue({
 }
 )
 
+
+
+// let allHeads = partCategorizer('Head')
+
+
+// const selectPart = function (allPartArray, number) {
+//   let selection = []
+//   let selectionPool = []
+//   allPartArray.forEach(indexNum => {
+//     let testLevel
+//     switch (indexNum.requirementType) {
+//       case 'STR':
+//         testLevel = app.str
+//         break
+//       case 'DEX':
+//         testLevel = app.dex
+//         break
+//       case 'CON':
+//         testLevel = app.con
+//         break
+//       case 'INT':
+//         testLevel = app.int
+//         break
+//       case 'WIS':
+//         testLevel = app.wis
+//         break
+//       case 'CHA':
+//         testLevel = app.cha
+//         break
+//       case 'SOL':
+//         testLevel = app.sol
+//         break
+//     }
+//     if (testLevel = indexNum.requirementAmount) {
+//       selectionPool.push(indexNum)
+//     }
+//   })
+  
+//   if(number) {
+//       switch(number){
+//         case 1:
+//           selection = [selectionPool[dice(selectionPool.length - 1)]]
+//           break
+//         case 2:
+//           selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+//           break
+//         case 3:
+//           selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+//           break
+//         case 4:
+//           selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+//           break
+//         default:
+//           selection = [selectionPool[dice(selectionPool.length - 1)]]
+//           break
+//       }
+//     } else {
+//       selection = [selectionPool[dice(selectionPool.length - 1)]]
+//     }
+  
+
+//     return selection
+//   };
+
+
+//   console.log(allHeads[1].name + allHeads[1].type)
+// let chosenHead = selectPart(allHeads)
+// console.log(chosenHead[0].name)
