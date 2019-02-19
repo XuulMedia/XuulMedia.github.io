@@ -17,8 +17,11 @@
 </head>
 
 <body>
-  <div id="app">
+<header class="header">
+  
     <h2>Reaper Generator</h2>
+</header>
+  <div id="app">
     <input type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
     <label for="Toggle Soul" >Enable Soul?</label>
     <select v-model="challengeRating" v-bind:disabled="rolled"id="crLevel">
@@ -49,8 +52,9 @@
     <button v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
     <button v-on:click="confirmTheRoll" v-bind:disabled="!firstRoll">Confirm Roll</button>
     <button v-bind:disabled="!rolled">Generate Reaper</button>
-    <button>Reset</button>
-
+    <button class="">Reset</button>
+  <div class="flex-container">
+  <section class="app flex-container">
     <br>
     <table>
       <tr>
@@ -94,8 +98,8 @@
         <td><input type="checkbox" v-model="overrideSol"v-bind:disabled="rolled"> </td>
       </tr>
     </table>
-
-
+    <Div>
+    <h4> Dev Display </h4>
     <p>{{ size }} HP {{ HP }} AC {{ AC}} </p>
     <p> str = {{str}} {{strMod}} </p>
     <p> dex = {{dex}} {{dexMod}} </p>
@@ -104,7 +108,21 @@
     <p> wis = {{wis}} {{wisMod}} </p>
     <p> cha = {{cha}} {{chaMod}} </p>
     <p v-if='soul'> sol = {{sol}} {{solMod}} </p>
-  </div>
+  </Div>
+
+
+</section>
+
+
+<aside class="sidebar">
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum officia voluptatibus quaerat neque iusto, minima, omnis numquam, ipsum culpa libero tenetur maxime id mollitia doloribus error nemo asperiores quia quidem.
+Generate
+</aside>
+</div>
+</div>
+<footer class="footer">
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus recusandae eum voluptatem molestias perspiciatis. Adipisci suscipit accusamus ea pariatur sint corporis ut vero, iure aperiam nihil rem perspiciatis! Numquam, sunt.
+</footer>
 </body>
 
 </html>

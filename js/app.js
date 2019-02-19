@@ -44,29 +44,21 @@ const app = new Vue({
     overrideCha: false,
     overrideSol: false,
 
-    // str: { set: function () { return this._str } },
-    // dex: { set: function () { return this._dex } },
-    // con: { set: function () { return this._con } },
-    // int: { set: function () { return this._int } },
-    // wis: { set: function () { return this._wis } },
-    // cha: { set: function () { return this._cha } },
-    // sol: { set: function () { return this._sol } },
+    str: { set: function () { return this._str } },
+    dex: { set: function () { return this._dex } },
+    con: { set: function () { return this._con } },
+    int: { set: function () { return this._int } },
+    wis: { set: function () { return this._wis } },
+    cha: { set: function () { return this._cha } },
+    sol: { set: function () { return this._sol } },
 
-    str: 20,
-    dex: 20,
-    con: 20,
-    int: 20,
-    wis: 20,
-    cha: 20,
-    sol: 20,
-
-
-
+    size: 'Medium',
+    HP: 10,
+    AC:10,
 
   },
   computed: {
    
-
     strMod: function () { return calcAttributeMod(this.str) },
     dexMod: function () { return calcAttributeMod(this.dex) },
     conMod: function () { return calcAttributeMod(this.con) },
@@ -75,74 +67,9 @@ const app = new Vue({
     chaMod: function () { return calcAttributeMod(this.cha) },
     solMod: function () { return calcAttributeMod(this.sol) },
 
-    size: () => {
-      let roll = dice(6);
-      if (roll == 1) {
-        return 'Small';
-      } else if (roll == 6) {
-        return 'Large';
-      } else {
-        return 'Medium';
-      }
-    },
-
-    HP: function () {
-      let rolled
-      if (this.size == 'Small') {
-        rolled = 6
-      } else if (this.size == 'Medium') {
-        rolled = 8
-      } else if (this.size == 'Large') {
-        rolled = 12
-      }
-
-      let conBonus = 5
-      if (this.conMod <= 1) {
-        conBonus = dice(rolled)
-      } else {
-        for (let i = 0; i < this.conMod; i++) {
-
-        }
-      }
-
-      if (this.challengeRating - 2 <= 1) {
-        if (this.size == 'Small') {
-          conBonus = 6;
-        } else if (this.size == 'Medium') {
-          conBonus = 8;
-        } else if (this.size == 'Large') {
-          conBonus = 12;
-        }
-
-      } else if (this.challengeRating - 2 > 1) {
-        if (this.size == 'Small') {
-          conBonus *= this.challengeRating - 1;
-        } else if (this.size == 'Medium') {
-          conBonus *= this.challengeRating;
-        } else if (this.size == 'Large') {
-          conBonus *= this.challengeRating;
-        }
-      }
-
-      return conBonus
-    },
-
-    AC: function () {
-      let baseAC
-      baseAC = dice(10) + 9;
-      if (this.size == 'Large') {
-        baseAC -= 2
-      } else if (this.size == 'Small') {
-        baseAC += 2
-      }
-      return baseAC
-    }
-
-
-
-
-
+   
   },
+
   methods: {
     _str: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
     _dex: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
@@ -184,6 +111,76 @@ const app = new Vue({
       if (this.overrideSol == false || this.sol <= 0 || this.sol == "") {
         this.sol = dice(20)
       }
+      
+      
+      this.size  = this.calcSize()
+      this.HP = this.calcHP()
+      this.AC = this.calcAC()
+
+ 
+    },
+
+    calcSize: () => {
+      let roll = dice(6);
+      if (roll == 1) {
+        return 'Small';
+      } else if (roll == 6) {
+        return 'Large';
+      } else {
+        return 'Medium';
+      }
+    },
+
+  calcHP : function () {
+      let rolled
+      if (this.size == 'Small') {
+        rolled = 6
+      } else if (this.size == 'Medium') {
+        rolled = 8
+      } else if (this.size == 'Large') {
+        rolled = 12
+      }
+
+      let conBonus = 5
+      if (this.conMod <= 1) {
+        conBonus = dice(rolled)
+      } else {
+        for (let i = 0; i < this.conMod; i++) {
+
+        }
+      }
+
+      if (this.challengeRating - 2 <= 1) {
+        if (this.size == 'Small') {
+          conBonus = 6;
+        } else if (this.size == 'Medium') {
+          conBonus = 8;
+        } else if (this.size == 'Large') {
+          conBonus = 12;
+        }
+
+      } else if (this.challengeRating - 2 > 1) {
+        if (this.size == 'Small') {
+          conBonus *= this.challengeRating - 1;
+        } else if (this.size == 'Medium') {
+          conBonus *= this.challengeRating;
+        } else if (this.size == 'Large') {
+          conBonus *= this.challengeRating;
+        }
+      }
+
+      return conBonus
+    },
+
+    calcAC: function () {
+      let baseAC
+      baseAC = dice(10) + 9;
+      if (this.size == 'Large') {
+        baseAC -= 2
+      } else if (this.size == 'Small') {
+        baseAC += 2
+      }
+      return baseAC
     },
 
     confirmTheRoll: function () {
@@ -256,17 +253,7 @@ const app = new Vue({
     
         return selection
       },
-
-    
-
-
-
-
-
-
   },
-
-
 }
 )
 
