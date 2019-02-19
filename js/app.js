@@ -267,28 +267,18 @@ const app = new Vue({
           selectionPool.push(indexNum)
         }
       })
-      
-      if(number == true) {
-          switch(number){
-            case 1:
-              selection = [selectionPool[dice(selectionPool.length - 1)]]
-              break
-            case 2:
-              selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-              break
-            case 3:
-              selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-              break
-            case 4:
-              selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-              break
-            default:
-              selection = [selectionPool[dice(selectionPool.length - 1)]]
-              break
-          }
-        } else {
-          selection = [selectionPool[dice(selectionPool.length - 1)]]
-        }
+      console.log(number)
+      if (typeof(number) != undefined || number == 1) {
+        selection = [selectionPool[dice(selectionPool.length - 1)]]
+      }
+      else if (number == 2) {
+        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+      } else if (number == 3) {
+        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+      } else {
+        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+      }
+
       console.log(selection)
     
         return selection
