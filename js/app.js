@@ -228,7 +228,7 @@ const app = new Vue({
        let output
        if (array.length = 1){
          output = array[0].name + ' ' + array[0].type
-       } else if (array.length = 1) {
+       } else if (array.length = 2) {
         output = array[0].name + ' ' + array[0].type + ', ' + array[1].name + ' ' + array[1].type
        }
        return output
