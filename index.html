@@ -51,7 +51,7 @@
 
     <button v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
     <button v-on:click="confirmTheRoll" v-bind:disabled="!firstRoll">Confirm Roll</button>
-    <button v-bind:disabled="!rolled">Generate Reaper</button>
+    <button v-on:click="generateReaper" v-bind:disabled="!rolled">Generate Reaper</button>
     <button class="">Reset</button>
   <div class="flex-container">
   <section class="app flex-container">
@@ -64,37 +64,37 @@
       </tr>
       <tr>
         <td>STR</td>
-        <td><input type="number" name="" id="" min=1 max=20 v-model="str"v-bind:disabled="!overrideStr"> {{str}} </td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="str"v-bind:disabled="!overrideStr"></td>
         <td><input type="checkbox" v-model="overrideStr"v-bind:disabled="rolled"></td>
       </tr>
       <tr>
         <td>DEX</td>
-        <td><input type="number" name="" id="" min=1 max=20 v-model="dex"v-bind:disabled="!overrideDex"> {{dex}} </td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="dex"v-bind:disabled="!overrideDex"></td>
         <td><input type="checkbox" v-model="overrideDex"v-bind:disabled="rolled"></td>
       </tr>
       <tr>
         <td>CON</td>
-        <td><input type="number" name="" id="" min=1 max=20 v-model="con"v-bind:disabled="!overrideCon"> {{con}} </td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="con"v-bind:disabled="!overrideCon"></td>
         <td><input type="checkbox" v-model="overrideCon"v-bind:disabled="rolled"></td>
       </tr>
       <tr>
         <td>INT</td>
-        <td><input type="number" name="" id="" min=1 max=20 v-model="int"v-bind:disabled="!overrideInt"> {{int}} </td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="int"v-bind:disabled="!overrideInt"></td>
         <td><input type="checkbox" v-model="overrideInt"v-bind:disabled="rolled"> </td>
       </tr>
       <tr>
         <td>WIS</td>
-        <td><input type="number" name="" id="" min=1 max=20 v-model="wis"v-bind:disabled="!overrideWis"> {{wis}} </td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="wis"v-bind:disabled="!overrideWis"></td>
         <td><input type="checkbox" v-model="overrideWis"v-bind:disabled="rolled"> </td>
       </tr>
       <tr>
         <td>CHA</td>
-        <td><input type="number" name="" id="" min=1 max=20 v-model="cha"v-bind:disabled="!overrideCha"> {{cha}} </td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="cha"v-bind:disabled="!overrideCha"></td>
         <td><input type="checkbox" v-model="overrideCha"v-bind:disabled="rolled"> </td>
       </tr>
       <tr v-if='soul'>
         <td>SOL</td>
-        <td><input type="number" name="" id="" min=1 max=20 v-model="sol"v-bind:disabled="!overrideSol"> {{sol}} </td>
+        <td><input type="number" name="" id="" min=1 max=20 v-model="sol"v-bind:disabled="!overrideSol"></td>
         <td><input type="checkbox" v-model="overrideSol"v-bind:disabled="rolled"> </td>
       </tr>
     </table>
@@ -108,6 +108,7 @@
     <p> wis = {{wis}} {{wisMod}} </p>
     <p> cha = {{cha}} {{chaMod}} </p>
     <p v-if='soul'> sol = {{sol}} {{solMod}} </p>
+    <p> {{head}} {{body}} {{arms}} {{legs}}    </p>
   </Div>
 
 

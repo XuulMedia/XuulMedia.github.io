@@ -56,6 +56,11 @@ const app = new Vue({
     HP: 10,
     AC:10,
 
+    head: '',
+    body: '',
+    arms: '',
+    legs: '',
+
   },
   computed: {
    
@@ -193,42 +198,77 @@ const app = new Vue({
       this.overrideWis = false
       this.overrideCha = false
       this.overrideSol = false
+
     },
+
+     generateReaper: function () {
+      this._head = this.selectPart(partCategorizer('Head'))
+      this.head = this._head[0].name + ' ' + this._head[0].type
+
+      this._body = this.selectPart(partCategorizer('Body'))
+      this.body = this._body[0].name + ' ' + this._body[0].type
+
+      this._arms= this.selectPart(partCategorizer('Arm'), 2)
+      this.arms = this.multiPart(this._arms)
+
+      this._legs = this.selectPart(partCategorizer('Legs'))
+      this.legs = this._legs[0].name + ' ' + this._legs[0].type
+
+
+      
+      
+      this._head[0].name + ' ' + this._head[0].type
+
+
+      
+       
+     },
+
+     multiPart: function(array){
+       let output
+       if (array.length = 1){
+         output = array[0].name + ' ' + array[0].type
+       } else if (array.length = 1) {
+        output = array[0].name + ' ' + array[0].type + ', ' + array[1].name + ' ' + array[1].type
+       }
+       return output
+     },
+
 
     selectPart: function (allPartArray, number) {
       let selection = []
       let selectionPool = []
       allPartArray.forEach(indexNum => {
-        let testLevel
+        let reaperSkill 
         switch (indexNum.requirementType) {
           case 'STR':
-            testLevel = app.str
+            reaperSkill = app.str
             break
           case 'DEX':
-            testLevel = app.dex
+            reaperSkill = app.dex
             break
           case 'CON':
-            testLevel = app.con
+            reaperSkill = app.con
             break
           case 'INT':
-            testLevel = app.int
+            reaperSkill = app.int
             break
           case 'WIS':
-            testLevel = app.wis
+            reaperSkill = app.wis
             break
           case 'CHA':
-            testLevel = app.cha
+            reaperSkill = app.cha
             break
           case 'SOL':
-            testLevel = app.sol
+            reaperSkill = app.sol
             break
         }
-        if (testLevel = indexNum.requirementAmount) {
+        if (reaperSkill >= indexNum.requirementAmount) {
           selectionPool.push(indexNum)
         }
       })
       
-      if(number) {
+      if(number == true) {
           switch(number){
             case 1:
               selection = [selectionPool[dice(selectionPool.length - 1)]]
@@ -249,7 +289,7 @@ const app = new Vue({
         } else {
           selection = [selectionPool[dice(selectionPool.length - 1)]]
         }
-      
+      console.log(selection)
     
         return selection
       },
