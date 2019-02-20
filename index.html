@@ -17,89 +17,89 @@
 </head>
 
 <body>
-  <header class="header">
+  <header>XUUL MEDIA</header>
+  <div id="app" class="wrapper">
+    <main>
+      <div class="control-panel">
+        <h2>Reaper Generator</h2>
+        <input type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
+        <label for="Toggle Soul">Enable Soul?</label>
 
-    <h2>Reaper Generator</h2>
-  </header>
-  <div id="app">
-    <input type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
-    <label for="Toggle Soul">Enable Soul?</label>
-    <select v-model="challengeRating" v-bind:disabled="rolled" id="crLevel">
-      <option value="1">01</option>
-      <option value="2">02</option>
-      <option value="3">03</option>
-      <option value="4">04</option>
-      <option selected="5">05</option>
-      <option value="6">06</option>
-      <option value="7">07</option>
-      <option value="8">08</option>
-      <option value="9">09</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="12">12</option>
-      <option value="13">13</option>
-      <option value="14">14</option>
-      <option value="15">15</option>
-      <option value="16">16</option>
-      <option value="17">17</option>
-      <option value="18">18</option>
-      <option value="19">19</option>
-      <option value="20">20</option>
-    </select>
-    <label for="challengeRating">Player Level</label>
+        <select class="dropdown" v-model="challengeRating" v-bind:disabled="rolled" id="crLevel">
+          <option value="1">01</option>
+          <option value="2">02</option>
+          <option value="3">03</option>
+          <option value="4">04</option>
+          <option selected="5">05</option>
+          <option value="6">06</option>
+          <option value="7">07</option>
+          <option value="8">08</option>
+          <option value="9">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+        </select>
+        <label for="challengeRating">Player Level</label>
 
-    <div class="flex-container">
-      <section class="app">
         <button v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
         <button v-on:click="confirmTheRoll" v-bind:disabled="!firstRoll">Confirm Roll</button>
         <button v-on:click="generateReaper" v-bind:disabled="!rolled">Generate Reaper</button>
         <button class="">Reset</button>
-
-        <br>
-        <table>
-          <tr>
-            <td>Stat</td>
-            <td>Value</td>
-            <td>Override?</td>
-          </tr>
-          <tr>
-            <td>STR</td>
-            <td><input type="number" name="" id="" min=1 max=20 v-model="str" v-bind:disabled="!overrideStr"></td>
-            <td><input type="checkbox" v-model="overrideStr" v-bind:disabled="rolled"></td>
-          </tr>
-          <tr>
-            <td>DEX</td>
-            <td><input type="number" name="" id="" min=1 max=20 v-model="dex" v-bind:disabled="!overrideDex"></td>
-            <td><input type="checkbox" v-model="overrideDex" v-bind:disabled="rolled"></td>
-          </tr>
-          <tr>
-            <td>CON</td>
-            <td><input type="number" name="" id="" min=1 max=20 v-model="con" v-bind:disabled="!overrideCon"></td>
-            <td><input type="checkbox" v-model="overrideCon" v-bind:disabled="rolled"></td>
-          </tr>
-          <tr>
-            <td>INT</td>
-            <td><input type="number" name="" id="" min=1 max=20 v-model="int" v-bind:disabled="!overrideInt"></td>
-            <td><input type="checkbox" v-model="overrideInt" v-bind:disabled="rolled"> </td>
-          </tr>
-          <tr>
-            <td>WIS</td>
-            <td><input type="number" name="" id="" min=1 max=20 v-model="wis" v-bind:disabled="!overrideWis"></td>
-            <td><input type="checkbox" v-model="overrideWis" v-bind:disabled="rolled"> </td>
-          </tr>
-          <tr>
-            <td>CHA</td>
-            <td><input type="number" name="" id="" min=1 max=20 v-model="cha" v-bind:disabled="!overrideCha"></td>
-            <td><input type="checkbox" v-model="overrideCha" v-bind:disabled="rolled"> </td>
-          </tr>
-          <tr v-if='soul'>
-            <td>SOL</td>
-            <td><input type="number" name="" id="" min=1 max=20 v-model="sol" v-bind:disabled="!overrideSol"></td>
-            <td><input type="checkbox" v-model="overrideSol" v-bind:disabled="rolled"> </td>
-          </tr>
-        </table>
-        <Div>
-          <h4> Dev Display </h4>
+      </div>
+      <div class="wrapper-internal">
+        <div class="stat-container">
+          <table>
+            <tr>
+              <td>Stat</td>
+              <td>Value</td>
+              <td>Override?</td>
+            </tr>
+            <tr>
+              <td>STR</td>
+              <td><input type="number" name="" id="" min=1 max=20 v-model="str" v-bind:disabled="!overrideStr"></td>
+              <td><input type="checkbox" v-model="overrideStr" v-bind:disabled="rolled"></td>
+            </tr>
+            <tr>
+              <td>DEX</td>
+              <td><input type="number" name="" id="" min=1 max=20 v-model="dex" v-bind:disabled="!overrideDex"></td>
+              <td><input type="checkbox" v-model="overrideDex" v-bind:disabled="rolled"></td>
+            </tr>
+            <tr>
+              <td>CON</td>
+              <td><input type="number" name="" id="" min=1 max=20 v-model="con" v-bind:disabled="!overrideCon"></td>
+              <td><input type="checkbox" v-model="overrideCon" v-bind:disabled="rolled"></td>
+            </tr>
+            <tr>
+              <td>INT</td>
+              <td><input type="number" name="" id="" min=1 max=20 v-model="int" v-bind:disabled="!overrideInt"></td>
+              <td><input type="checkbox" v-model="overrideInt" v-bind:disabled="rolled"> </td>
+            </tr>
+            <tr>
+              <td>WIS</td>
+              <td><input type="number" name="" id="" min=1 max=20 v-model="wis" v-bind:disabled="!overrideWis"></td>
+              <td><input type="checkbox" v-model="overrideWis" v-bind:disabled="rolled"> </td>
+            </tr>
+            <tr>
+              <td>CHA</td>
+              <td><input type="number" name="" id="" min=1 max=20 v-model="cha" v-bind:disabled="!overrideCha"></td>
+              <td><input type="checkbox" v-model="overrideCha" v-bind:disabled="rolled"> </td>
+            </tr>
+            <tr v-if='soul'>
+              <td>SOL</td>
+              <td><input type="number" name="" id="" min=1 max=20 v-model="sol" v-bind:disabled="!overrideSol"></td>
+              <td><input type="checkbox" v-model="overrideSol" v-bind:disabled="rolled"> </td>
+            </tr>
+          </table>
+        </div>
+        <div class="dev-display"><h4> Dev Display </h4>
           <p>{{ size }} HP {{ HP }} AC {{ AC}} </p>
           <p> str = {{str}} {{strMod}} </p>
           <p> dex = {{dex}} {{dexMod}} </p>
@@ -108,25 +108,19 @@
           <p> wis = {{wis}} {{wisMod}} </p>
           <p> cha = {{cha}} {{chaMod}} </p>
           <p v-if='soul'> sol = {{sol}} {{solMod}} </p>
-          <p> {{head}} {{body}} {{arms}} {{legs}} </p>
-        </Div>
-
-
-      </section>
-
-
-      <aside class="sidebar">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum officia voluptatibus quaerat neque iusto,
-        minima, omnis numquam, ipsum culpa libero tenetur maxime id mollitia doloribus error nemo asperiores quia
-        quidem.
-        Generate
-      </aside>
-    </div>
+          <p> {{arms}} </p></div>
+      </div class="wrapper">
+    </main>
+    <aside></aside>
+    <div class="reaper-card"></div>
+    
+  
+  <footer>
+      Copyright Travis Pierce 2019
+    </footer>
   </div>
-  <footer class="footer">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus recusandae eum voluptatem molestias perspiciatis.
-    Adipisci suscipit accusamus ea pariatur sint corporis ut vero, iure aperiam nihil rem perspiciatis! Numquam, sunt.
-  </footer>
 </body>
+
+
 
 </html>

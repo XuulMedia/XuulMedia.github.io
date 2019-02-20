@@ -54,7 +54,7 @@ const app = new Vue({
 
     size: 'Medium',
     HP: 10,
-    AC:10,
+    AC: 10,
 
     head: '',
     body: '',
@@ -63,7 +63,7 @@ const app = new Vue({
 
   },
   computed: {
-   
+
     strMod: function () { return calcAttributeMod(this.str) },
     dexMod: function () { return calcAttributeMod(this.dex) },
     conMod: function () { return calcAttributeMod(this.con) },
@@ -72,7 +72,7 @@ const app = new Vue({
     chaMod: function () { return calcAttributeMod(this.cha) },
     solMod: function () { return calcAttributeMod(this.sol) },
 
-   
+
   },
 
   methods: {
@@ -116,13 +116,13 @@ const app = new Vue({
       if (this.overrideSol == false || this.sol <= 0 || this.sol == "") {
         this.sol = dice(20)
       }
-      
-      
-      this.size  = this.calcSize()
+
+
+      this.size = this.calcSize()
       this.HP = this.calcHP()
       this.AC = this.calcAC()
 
- 
+
     },
 
     calcSize: () => {
@@ -136,7 +136,7 @@ const app = new Vue({
       }
     },
 
-  calcHP : function () {
+    calcHP: function () {
       let rolled
       if (this.size == 'Small') {
         rolled = 6
@@ -201,45 +201,49 @@ const app = new Vue({
 
     },
 
-     generateReaper: function () {
+    generateReaper: function () {
       this._head = this.selectPart(partCategorizer('Head'))
       this.head = this._head[0].name + ' ' + this._head[0].type
 
       this._body = this.selectPart(partCategorizer('Body'))
       this.body = this._body[0].name + ' ' + this._body[0].type
 
-      this._arms= this.selectPart(partCategorizer('Arm'), 2)
+      this._arms = this.selectPart(partCategorizer('Arm'), 4)
       this.arms = this.multiPart(this._arms)
 
       this._legs = this.selectPart(partCategorizer('Legs'))
       this.legs = this._legs[0].name + ' ' + this._legs[0].type
 
 
-      
-      
+
+
       this._head[0].name + ' ' + this._head[0].type
 
 
-      
-       
-     },
-
-     multiPart: function(array){
-       let output
-       if (array.length = 1){
-         output = array[0].name + ' ' + array[0].type
-       } else if (array.length = 2) {
-        output = array[0].name + ' ' + array[0].type + ', ' + array[1].name + ' ' + array[1].type
-       }
-       return output
-     },
 
 
-    selectPart: function (allPartArray, number) {
+    },
+
+    multiPart: function (array) {
+      let output
+      if (array.length == 1) {
+        output = array[0].name + ' ' + array[0].type
+      } else if (array.length == 2) {
+        output = array[0].type + 's(2): ' + array[0].name + ' & ' + array[1].name
+      } else if (array.length == 3) {
+        output = array[0].type + 's(3): ' + array[0].name + ', ' + array[1].name + ', & ' + array[2].name
+      } else if (array.length == 4) {
+        output = array[0].type + 's(4): ' + array[0].name + ', ' + array[1].name + ', ' + array[2].name +  ', & ' + array[3].name
+      }
+      return output
+    },
+
+
+    selectPart: function (allPartArray, num) {
       let selection = []
       let selectionPool = []
       allPartArray.forEach(indexNum => {
-        let reaperSkill 
+        let reaperSkill
         switch (indexNum.requirementType) {
           case 'STR':
             reaperSkill = app.str
@@ -267,22 +271,22 @@ const app = new Vue({
           selectionPool.push(indexNum)
         }
       })
-      console.log(number)
-      if (typeof(number) != undefined || number == 1) {
-        selection = [selectionPool[dice(selectionPool.length - 1)]]
+      console.log(num)
+      if (num == 4) {
+        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
       }
-      else if (number == 2) {
+      else if (num == 2) {
         selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-      } else if (number == 3) {
+      } else if (num == 3) {
         selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
       } else {
-        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+        selection = [selectionPool[dice(selectionPool.length - 1)]]
       }
 
       console.log(selection)
-    
-        return selection
-      },
+
+      return selection
+    },
   },
 }
 )
@@ -292,7 +296,7 @@ const app = new Vue({
 // let allHeads = partCategorizer('Head')
 
 
-// const selectPart = function (allPartArray, number) {
+// const selectPart = function (allPartArray, num) {
 //   let selection = []
 //   let selectionPool = []
 //   allPartArray.forEach(indexNum => {
@@ -324,9 +328,9 @@ const app = new Vue({
 //       selectionPool.push(indexNum)
 //     }
 //   })
-  
-//   if(number) {
-//       switch(number){
+
+//   if(num) {
+//       switch(num){
 //         case 1:
 //           selection = [selectionPool[dice(selectionPool.length - 1)]]
 //           break
@@ -346,7 +350,7 @@ const app = new Vue({
 //     } else {
 //       selection = [selectionPool[dice(selectionPool.length - 1)]]
 //     }
-  
+
 
 //     return selection
 //   };

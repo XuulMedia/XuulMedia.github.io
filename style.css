@@ -1,4 +1,75 @@
-main, header, section, aside, footer {
+.wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  border: 2px solid pink;
+  margin: auto
+}
+
+.wrapper-internal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid pink;
+  margin: auto
+}
+
+body {
+  display: grid;
+  grid-template: 10rem 1fr 10rem;
+  
+}
+
+
+
+
+
+/* Training Wheels */
+
+header
+{
+  background-color: green;
+}
+
+main {
+  background-color: red;
+  text-align: center
+}
+
+aside {
+  background-color: purple;
+}
+
+footer {
+  background-color: yellow;
+  grid-column: span 2;
+}
+
+.control-panel  {
+  border: 1px solid black;
+}
+.dev-display {
+  border: 1px solid black;
+}
+
+.stat-containter{
+  border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* main, header, section, aside, footer {
   margin: 0;
   padding: rem-calc(20);
   border: 1px solid #000000;
@@ -27,16 +98,40 @@ main {
 
 .app {
   background: #129a22;
-  flex: 1
+  flex: 1;
+  border-radius: 5px;
+  margin: 0 auto
 }
 
 .sidebar {
   border: 1px solid #000000;
   background: #673ab7;
-  flex: 0 1 300px
+  flex: 0 1 300px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .footer {
   border: 1px solid #000000;
   background: #616161;
 }
+
+
+.container {
+  display: inline-block;
+  padding: 1rem;
+  background-color: rgb(170, 152, 119);
+  border: 1px solid #222;
+  border-radius: 5px;
+}
+
+button {
+  padding: .5rem 1rem;
+  border-radius: 3px;
+}
+
+.dropdown {
+  padding: .5rem 1rem;
+  border-radius: 3px;
+  font-size: 1rem
+} */
