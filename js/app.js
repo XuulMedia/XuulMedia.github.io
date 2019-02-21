@@ -29,9 +29,11 @@ const app = new Vue({
   el: '#app',
 
   data: {
-    firstRoll: false,
+    noFirstRoll: false,
     soul: true,
     rolled: false,
+
+    numOfReapers: 0,
 
 
     challengeRating: 3,
@@ -63,7 +65,6 @@ const app = new Vue({
 
   },
   computed: {
-
     strMod: function () { return calcAttributeMod(this.str) },
     dexMod: function () { return calcAttributeMod(this.dex) },
     conMod: function () { return calcAttributeMod(this.con) },
@@ -84,6 +85,14 @@ const app = new Vue({
     _cha: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
     _sol: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
 
+    _strMod: function () { return calcAttributeMod(this.str) },
+    _dexMod: function () { return calcAttributeMod(this.dex) },
+    _conMod: function () { return calcAttributeMod(this.con) },
+    _intMod: function () { return calcAttributeMod(this.int) },
+    _wisMod: function () { return calcAttributeMod(this.wis) },
+    _chaMod: function () { return calcAttributeMod(this.cha) },
+    _solMod: function () { return calcAttributeMod(this.sol) },
+
     toggleSoul: function () {
       soul = !soul
     },
@@ -94,7 +103,7 @@ const app = new Vue({
       }
     },
     rollTheDice: function () {
-      this.firstRoll = true
+      this.noFirstRoll = true
       if (this.overrideStr == false || this.str <= 0 || this.str == "") {
         this.str = dice(20)
       }
@@ -189,7 +198,7 @@ const app = new Vue({
     },
 
     confirmTheRoll: function () {
-      this.firstRoll = false
+      this.noFirstRoll = false
       this.rolled = !this.rolled
       this.overrideStr = false
       this.overrideDex = false
@@ -202,26 +211,55 @@ const app = new Vue({
     },
 
     generateReaper: function () {
-      this._head = this.selectPart(partCategorizer('Head'))
-      this.head = this._head[0].name + ' ' + this._head[0].type
+      this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3))
+      this.head = this.multiPart(this._head)
 
       this._body = this.selectPart(partCategorizer('Body'))
       this.body = this._body[0].name + ' ' + this._body[0].type
 
-      this._arms = this.selectPart(partCategorizer('Arm'), 4)
+      this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4))
       this.arms = this.multiPart(this._arms)
 
       this._legs = this.selectPart(partCategorizer('Legs'))
       this.legs = this._legs[0].name + ' ' + this._legs[0].type
 
+      this.numOfReapers++
+      this.noFirstRoll = false
+      this.rolled = false
+    },
+
+    reset: function () {
+      this.noFirstRoll = false
+      this.rolled = false
+      this.overrideStr = false
+      this.overrideDex = false
+      this.overrideCon = false
+      this.overrideInt = false
+      this.overrideWis = false
+      this.overrideCha = false
+      this.overrideSol = false
 
 
+      this.head = null
+      this.body = null
+      this.arms = null
+      this.legs = null
 
-      this._head[0].name + ' ' + this._head[0].type
-
-
-
-
+      this.str = null
+      this.dex = null
+      this.con = null
+      this.int = null
+      this.wis = null
+      this.cha = null
+      this.sol = null
+      
+      this.strMod = null
+      this.dexMod = null
+      this.conMod = null
+      this.intMod = null
+      this.wisMod = null
+      this.chaMod = null
+      this.solMod = null
     },
 
     multiPart: function (array) {
@@ -233,9 +271,55 @@ const app = new Vue({
       } else if (array.length == 3) {
         output = array[0].type + 's(3): ' + array[0].name + ', ' + array[1].name + ', & ' + array[2].name
       } else if (array.length == 4) {
-        output = array[0].type + 's(4): ' + array[0].name + ', ' + array[1].name + ', ' + array[2].name +  ', & ' + array[3].name
+        output = array[0].type + 's(4): ' + array[0].name + ', ' + array[1].name + ', ' + array[2].name + ', & ' + array[3].name
       }
       return output
+    },
+
+    rollForMultiLimb: function (max) {
+      let limbs
+      let chance = dice(12)
+
+      if (max == 4) {
+        switch (chance) {
+          case 1: limbs = 1
+          case 2: limbs = 1
+            break
+          case 3: limbs = 2
+          case 4: limbs = 2
+          case 5: limbs = 2
+          case 6: limbs = 2
+          case 7: limbs = 2
+          case 8: limbs = 2
+          case 9: limbs = 2
+            break
+          case 10: limbs = 3
+          case 11: limbs = 3
+            break
+          case 12: limbs = 4
+        }
+      } else if
+        (max == 3) {
+        switch (chance) {
+          case 1: limbs = 1
+          case 2: limbs = 1
+          case 3: limbs = 1
+          case 4: limbs = 1
+          case 5: limbs = 1
+          case 6: limbs = 1
+          case 7: limbs = 1
+          case 8: limbs = 1
+            break
+          case 9: limbs = 2
+          case 10: limbs = 2
+          case 11: limbs = 2
+            break
+          case 12: limbs = 3
+        }
+      }
+
+
+      return limbs
     },
 
 
@@ -290,6 +374,22 @@ const app = new Vue({
   },
 }
 )
+
+Vue.component('reaper-card', {
+  template:'<div class="card>'
+
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+})
+
+
+
+// for the template use numOfReapers as a variable for the ID. The can just continue to add reapers that will have a different ID
+// after that refactor the card to a textbox with a copy button on the card and just under the console.
 
 
 
