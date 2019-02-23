@@ -37,6 +37,21 @@ body {
   margin: 2rem;
 }
 
+.reaper-card-deck {
+  border: black 1px solid;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.card {
+  border: black 1px solid
+}
+
+.card {
+  min-width: 370px
+}
+
 .button {
   padding: .5rem .5rem;
   border-radius: 5px;

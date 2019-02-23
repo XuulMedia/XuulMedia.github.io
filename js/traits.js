@@ -53,7 +53,7 @@ export const allTraits = {
  flaming :
   'Flaming: if a player touches or makes a melee attack against this creature, they take D10 fire damage.',
  phasic :
-  'Phasic: this creature can move through creatrues and objects as if they are difficult terrain. Creatures moved through take 1d10 force damage',
+  'Phasic: this creature can move through creatrues and objects as if they are difficult terrain. Creatures moved through take 1d10 force damage.',
  static :
   'Static: if you chose to disengage or move away from this creature you must pass a strength(DC12) check or be pulled into melee range.',
  stone :

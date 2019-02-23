@@ -34,10 +34,14 @@ const app = new Vue({
     rolled: false,
 
     numOfReapers: 0,
+    reapers: [],
+
+    speed: 30,
+    speedType: '',
 
 
     challengeRating: 3,
-    speed: 30,
+
     overrideStr: false,
     overrideDex: false,
     overrideCon: false,
@@ -223,9 +227,14 @@ const app = new Vue({
       this._legs = this.selectPart(partCategorizer('Legs'))
       this.legs = this._legs[0].name + ' ' + this._legs[0].type
 
+      let creature = this.createReaperCard()
+      this.reapers.push(creature)
+
       this.numOfReapers++
       this.noFirstRoll = false
       this.rolled = false
+
+
     },
 
     reset: function () {
@@ -252,7 +261,7 @@ const app = new Vue({
       this.wis = null
       this.cha = null
       this.sol = null
-      
+
       this.strMod = null
       this.dexMod = null
       this.conMod = null
@@ -322,6 +331,42 @@ const app = new Vue({
       return limbs
     },
 
+    createReaperCard: function () {
+      let monster =
+      this.monster = {
+        str: this.str,
+        dex: this.dex,
+        con: this.con,
+        int: this.int,
+        wis: this.wis,
+        cha: this.cha,
+        sol: this.sol,
+        size: this.size,
+        HP: this.HP,
+        AC: this.AC,
+
+        strMod: this.strMod,
+        dexMod: this.dexMod,
+        conMod: this.conMod,
+        intMod: this.intMod,
+        wisMod: this.wisMod,
+        chaMod: this.chaMod,
+        solMod: this.solMod,
+
+
+        head: this.head,
+        body: this.body,
+        arms: this.arms,
+        legs: this.legs,
+
+      }
+
+      return monster
+
+
+
+    },
+
 
     selectPart: function (allPartArray, num) {
       let selection = []
@@ -376,14 +421,56 @@ const app = new Vue({
 )
 
 Vue.component('reaper-card', {
-  template:'<div class="card>'
-
+  template: `
+  <div class="card">
+          <h5 class="card-title"">{{Reaper-Name}}</h5>
+          <h6 class="card-subtitle">{{size}} Demon, Chaotic Evil
+          <hr />
+          <div class="card-text"> 
+            <p> Armor Class: {{AC}}</p>
+            <p> Hit Points: {{HP}}</p>
+            <p> Speed: {{speed}} {{speedType}}</p>
+          </div>
+          <hr />
+          <table>
+            <thead>
+              <tr>
+              <th>STR</th>
+              <th>DEX</th>
+              <th>CON</th>
+              <th>INT</th>
+              <th>WIS</th>
+              <th>CHA</th>
+              <th v-if='soul'>SOL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{str}} ( {{strMod}} ) </td>
+                <td>{{dex}} ( {{dexMod}} ) </td>
+                <td>{{ion}} ( {{conMod}} ) </td>
+                <td>{{int}} ( {{intMod}} ) </td>
+                <td>{{wis}} ( {{wisMod}} ) </td>
+                <td>{{cha}} ( {{chaMod}} ) </td>
+                <td v-if='soul'>{{sol}} ( {{solMod}} ) </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <div class="trait-action">
+            <p>{{traits}}</p>
+            <p>{{actions}}</p>
+            <br>
+            <p>{{parts}}</p>
+          </div>
+      </div>
+  `,
   data: function () {
-    return {
-      count: 0
-    }
-  },
-  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+
+  }
+
+
+
 })
 
 

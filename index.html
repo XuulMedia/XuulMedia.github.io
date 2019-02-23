@@ -114,9 +114,23 @@
           <p> wis = {{wis}} {{wisMod}} </p>
           <p> cha = {{cha}} {{chaMod}} </p>
           <p v-if='soul'> sol = {{sol}} {{solMod}} </p>
-          <p> {{arms}} </p>
+          <p> {{reapers}} </p>
         </div>
-      </div class="wrapper">
+      </div>
+
+      <div class="reaper-card-deck" >
+        <ul>Reapers </ul>
+          <li v-for="index of reapers">
+            {{reaper}}
+          </li>
+     
+
+        
+      </div>
+
+     
+
+
     </main>
     <aside>
       <h3>About</h3>
@@ -147,8 +161,11 @@
           </ul>
           </p>
     </aside>
-    <div class="reaper-card"></div>
   </div class="main-container">
+
+
+
+ 
 
 
   <footer>
