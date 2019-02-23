@@ -114,14 +114,56 @@
           <p> wis = {{wis}} {{wisMod}} </p>
           <p> cha = {{cha}} {{chaMod}} </p>
           <p v-if='soul'> sol = {{sol}} {{solMod}} </p>
-          <p> {{reapers}} </p>
+          <p> {{bodyTraits}} {{headTraits}} </p>
         </div>
       </div>
 
       <div class="reaper-card-deck" >
         <ul>Reapers </ul>
           <li v-for="index of reapers">
-            {{reaper}}
+            <div class="card">
+              <h5 class="card-title">{{index.Reaper-Name}}</h5>
+              <h6 class="card-subtitle">{{index.size}} Demon, Chaotic Evil</h6>
+              <hr />
+              <div class="card-text"> 
+                <p> Armor Class: {{index.AC}}</p>
+                <p> Hit Points: {{index.HP}}</p>
+                <p> Speed: {{index.speed}} {{speedType}}</p>
+              </div>
+              <hr />
+              <table>
+                <thead>
+                  <tr>
+                  <th>STR</th>
+                  <th>DEX</th>
+                  <th>CON</th>
+                  <th>INT</th>
+                  <th>WIS</th>
+                  <th>CHA</th>
+                  <th v-if='soul'>SOL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{index.str}} ( {{index.strMod}} ) </td>
+                    <td>{{index.dex}} ( {{index.dexMod}} ) </td>
+                    <td>{{index.ion}} ( {{index.conMod}} ) </td>
+                    <td>{{index.int}} ( {{index.intMod}} ) </td>
+                    <td>{{index.wis}} ( {{index.wisMod}} ) </td>
+                    <td>{{index.cha}} ( {{index.chaMod}} ) </td>
+                    <td v-if='soul'>{{index.sol}} ( {{index.solMod}} ) </td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <div class="trait-action">
+                <p>{{index.traits}}</p>
+                <p>{{index.actions}}</p>
+                <br>
+                <p>{{index.parts}}</p>
+              </div>
+          </div>
+      
           </li>
      
 

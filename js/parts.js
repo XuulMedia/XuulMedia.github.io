@@ -13,7 +13,7 @@ class Part {
     this.requirementType = requirementType
     this.requirementAmount = requirementAmount
     this.traits = trait
-    this.action = action
+    this.actions = action
     this.rarity = function () {
       let level
       let stat = requirementAmount

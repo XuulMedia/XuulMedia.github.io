@@ -67,6 +67,15 @@ const app = new Vue({
     arms: '',
     legs: '',
 
+    headTraits: '',
+    bodyTraits: '',
+    armsTraits: '',
+    legsTraits: '',
+
+
+    traits: '',
+    actions: '', 
+
   },
   computed: {
     strMod: function () { return calcAttributeMod(this.str) },
@@ -217,18 +226,27 @@ const app = new Vue({
     generateReaper: function () {
       this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3))
       this.head = this.multiPart(this._head)
+      this.headTraits = this.multiPartTraits(this._head)
 
       this._body = this.selectPart(partCategorizer('Body'))
       this.body = this._body[0].name + ' ' + this._body[0].type
+      this.bodyTraits = this._body[0].traits
 
       this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4))
       this.arms = this.multiPart(this._arms)
+      this.armsTraits = this.multiPartTraits(this._arms)
 
       this._legs = this.selectPart(partCategorizer('Legs'))
       this.legs = this._legs[0].name + ' ' + this._legs[0].type
+      this.legsTraits = this._legs[0].traits
+
+      
+
+      // this.traits = this.traitCollector()
+      // let actions =
 
       let creature = this.createReaperCard()
-      this.reapers.push(creature)
+      this.reapers[this.numOfReapers] = creature
 
       this.numOfReapers++
       this.noFirstRoll = false
@@ -285,6 +303,25 @@ const app = new Vue({
       return output
     },
 
+    multiPartTraits: function (array) {
+      let output = []
+
+
+
+      if (array.length == 1) {
+        output.concat(array[0].traits)
+      } else if (array.length == 2) {
+        output = [array[0].traits, array[1].traits]
+      } else if (array.length == 3) {
+        output = [array[0].traits, array[1].traits, array[2].traits]
+      } else if (array.length == 4) {
+        output = [array[0].traits, array[1].traits, array[2].traits, array[3].traits]
+      }
+      l
+
+      return returnOutput
+    },
+
     rollForMultiLimb: function (max) {
       let limbs
       let chance = dice(12)
@@ -331,6 +368,10 @@ const app = new Vue({
       return limbs
     },
 
+    selectReaperName: function (){
+
+    },
+
     createReaperCard: function () {
       let monster =
       this.monster = {
@@ -365,6 +406,34 @@ const app = new Vue({
 
 
 
+    },
+
+    traitCollector: function () {
+      let allTraits = []
+
+      this.legs[0].traits.forEach(element => {
+        allTraits.push(element)
+      })
+
+      this.arms.forEach(element => {
+        element.traits.forEach(ele => {
+          allTraits.push(ele)
+        })
+      });
+
+      this.heads.forEach(element => {
+        element.traits.forEach(ele => {
+          allTraits.push(ele)
+        })
+      });
+
+      this.body.forEach(element => {
+        element.traits.forEach(ele => {
+          allTraits.push(ele)
+        })
+      });
+
+      return allTraits
     },
 
 
@@ -423,13 +492,13 @@ const app = new Vue({
 Vue.component('reaper-card', {
   template: `
   <div class="card">
-          <h5 class="card-title"">{{Reaper-Name}}</h5>
-          <h6 class="card-subtitle">{{size}} Demon, Chaotic Evil
+          <h5 class="card-title"">{{index.Reaper-Name}}</h5>
+          <h6 class="card-subtitle">{{index.size}} Demon, Chaotic Evil</h6>
           <hr />
           <div class="card-text"> 
-            <p> Armor Class: {{AC}}</p>
-            <p> Hit Points: {{HP}}</p>
-            <p> Speed: {{speed}} {{speedType}}</p>
+            <p> Armor Class: {{index.AC}}</p>
+            <p> Hit Points: {{index.HP}}</p>
+            <p> Speed: {{index.speed}} {{speedType}}</p>
           </div>
           <hr />
           <table>
@@ -446,22 +515,22 @@ Vue.component('reaper-card', {
             </thead>
             <tbody>
               <tr>
-                <td>{{str}} ( {{strMod}} ) </td>
-                <td>{{dex}} ( {{dexMod}} ) </td>
-                <td>{{ion}} ( {{conMod}} ) </td>
-                <td>{{int}} ( {{intMod}} ) </td>
-                <td>{{wis}} ( {{wisMod}} ) </td>
-                <td>{{cha}} ( {{chaMod}} ) </td>
-                <td v-if='soul'>{{sol}} ( {{solMod}} ) </td>
+                <td>{{index.str}} ( {{index.strMod}} ) </td>
+                <td>{{index.dex}} ( {{index.dexMod}} ) </td>
+                <td>{{index.ion}} ( {{index.conMod}} ) </td>
+                <td>{{index.int}} ( {{index.intMod}} ) </td>
+                <td>{{index.wis}} ( {{index.wisMod}} ) </td>
+                <td>{{index.cha}} ( {{index.chaMod}} ) </td>
+                <td v-if='soul'>{{index.sol}} ( {{index.solMod}} ) </td>
               </tr>
             </tbody>
           </table>
           <hr />
           <div class="trait-action">
-            <p>{{traits}}</p>
-            <p>{{actions}}</p>
+            <p>{{index.traits}}</p>
+            <p>{{index.actions}}</p>
             <br>
-            <p>{{parts}}</p>
+            <p>{{index.parts}}</p>
           </div>
       </div>
   `,
