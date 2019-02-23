@@ -304,12 +304,9 @@ const app = new Vue({
     },
 
     multiPartTraits: function (array) {
-      let output = []
-
-
-
+      let output
       if (array.length == 1) {
-        output.concat(array[0].traits)
+        output = [array[0].traits]
       } else if (array.length == 2) {
         output = [array[0].traits, array[1].traits]
       } else if (array.length == 3) {
@@ -317,9 +314,8 @@ const app = new Vue({
       } else if (array.length == 4) {
         output = [array[0].traits, array[1].traits, array[2].traits, array[3].traits]
       }
-      l
-
-      return returnOutput
+      
+      return output
     },
 
     rollForMultiLimb: function (max) {
