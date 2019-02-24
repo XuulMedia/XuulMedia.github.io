@@ -1,26 +1,26 @@
 class MeleeWeapon {
   constructor(name, dmg, statReq, range, dmgType) {
-    this.name = name + '.'
+    this.name = name + '. '
     this.dmg = 'Hit: ' + dmg + ' '
     this.statReq = statReq
-    this.range = range
+   
     this.dmgType = dmgType + '.'
-    this.melee = 'Melee Weapon Attack;'
+    this.type = 'Melee Weapon Attack;'
     this.target = 'one Target.'
-    this.range = 'Reach ' + range + 'ft., one target.'
+    this.range = 'Reach ' + range + 'ft., one target. '
   }
 }
 
 class RangeWeapon {
   constructor(name, dmg, statReq, range, dmgType) {
-    this.name = name + '.'
+    this.name = name + '. '
     this.dmg = 'Hit: ' + dmg + ' '
     this.statReq = statReq
-    this.range = '(' + range + ')'
+    
     this.dmgType = dmgType + '.'
-    this.range = 'Ranged Weapon Attack;'
+    this.type = 'Ranged Weapon Attack;'
     this.target = 'one Target.'
-    this.range = 'Reach ' + range + 'ft., one target.'
+    this.range = 'Reach ' + range + 'ft., one target. '
   }
 }
 

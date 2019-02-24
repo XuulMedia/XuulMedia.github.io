@@ -23,9 +23,11 @@
   </header>
   <div id="app" class="wrapper">
     <main>
+      <h2>Reaper Generator</h2>
       <div class="control-panel">
-        <h2>Reaper Generator</h2>
-        <label for="Toggle Soul"></label>
+        <div class="control-container">
+        
+        <label for="Toggle Soul">
         <input type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
         Enable Soul?</label>
 
@@ -53,19 +55,21 @@
             <option value="20">20</option>
           </select>
           Player Level</label>
-
+        </div>
+        <div class="control-container">
         <button class="button" v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
         <button class="button" v-on:click="confirmTheRoll" v-bind:disabled="!noFirstRoll">Confirm Roll</button>
         <button class="button" v-on:click="generateReaper" v-bind:disabled="!rolled">Generate Reaper</button>
         <button class="button" v-on:click="reset">Reset</button>
       </div>
+      </div>
       <div class="wrapper-internal">
         <div class="stat-container">
           <table>
             <tr>
-              <td>Stat</td>
-              <td>Value</td>
-              <td>Override?</td>
+              <td class="bold underline">Value</td>
+              <td class="bold underline">Override?</td>
+              <td class="bold underline">Stat</td>
             </tr>
             <tr>
               <td>STR</td>
@@ -104,7 +108,10 @@
             </tr>
           </table>
         </div>
-        <div class="dev-display">
+        <div class="stat-container">
+
+        </div>
+        <div v-if="devloperMode" class="dev-display">
           <h4> Dev Display </h4>
           <p>{{ size }} HP {{ HP }} AC {{ AC}} </p>
           <p> str = {{str}} {{strMod}} </p>
@@ -114,15 +121,15 @@
           <p> wis = {{wis}} {{wisMod}} </p>
           <p> cha = {{cha}} {{chaMod}} </p>
           <p v-if='soul'> sol = {{sol}} {{solMod}} </p>
-          <p> {{bodyTraits}} {{headTraits}} </p>
+          <p> alltraits = {{traits}} </p>
         </div>
       </div>
-
+      <h5>Reapers</h5>
+      <br>
       <div class="reaper-card-deck" >
-        <ul>Reapers </ul>
-          <li v-for="index of reapers">
+          <div v-for="index of reapers">
             <div class="card">
-              <h5 class="card-title">{{index.Reaper-Name}}</h5>
+              <h4 class="card-title">{{index.name}} Reaper  <span>CR: {{index.CR}}</span></h4>
               <h6 class="card-subtitle">{{index.size}} Demon, Chaotic Evil</h6>
               <hr />
               <div class="card-text"> 
@@ -147,7 +154,7 @@
                   <tr>
                     <td>{{index.str}} ( {{index.strMod}} ) </td>
                     <td>{{index.dex}} ( {{index.dexMod}} ) </td>
-                    <td>{{index.ion}} ( {{index.conMod}} ) </td>
+                    <td>{{index.con}} ( {{index.conMod}} ) </td>
                     <td>{{index.int}} ( {{index.intMod}} ) </td>
                     <td>{{index.wis}} ( {{index.wisMod}} ) </td>
                     <td>{{index.cha}} ( {{index.chaMod}} ) </td>
@@ -157,14 +164,16 @@
               </table>
               <hr />
               <div class="trait-action">
-                <p>{{index.traits}}</p>
-                <p>{{index.actions}}</p>
-                <br>
-                <p>{{index.parts}}</p>
+                <p><strong>Traits:</strong></p> 
+                <p v-for="index of index.traits">{{index}}</p>
+                <p><strong>Actions:</strong></p>
+                <p v-for="index of index.actions">{{index}}</p>
+                <hr>
+                <p><strong>Parts: </strong><span>{{index.head}} | {{index.arms}} | {{index.body}} | {{index.legs}}</span></p>
               </div>
           </div>
       
-          </li>
+        </div>
      
 
         

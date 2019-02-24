@@ -16,53 +16,52 @@ class Part {
     this.actions = action
     this.rarity = function () {
       let level
-      let stat = requirementAmount
-      console.log(stat)
+      let stat = this.requirementAmount
       switch (stat) {
         case (1):
         case (2):
-          level = 'Rarity level 1'
+          level = 1
           break
         case (3):
         case (4):
-          level = 'Rarity level 2'
+          level = 2
            break
         case (5):
         case (6) :
-          level = 'Rarity level 3'
+          level = 3
            break
         case (7):
         case (8):
-          level = 'Rarity level 4'
+          level = 4
            break
         case (9):
         case (10):
-          level = 'Rarity level 5'
+          level = 5
            break
         case (11):
         case (12):
-          level = 'Rarity level 6'
+          level = 6
            break
         case (13):
         case (14):
-          level = 'Rarity level 7'
+          level = 7
            break
         case (15):
         case (16):
-          level = 'Rarity level 8'
+          level = 8
            break
         case (17):
         case (18):
-          level = 'Rarity level 9'
+          level = 9
            break
         case (19):
-          level = 'Rarity level 10'
+          level = 10
            break
         case (20):
-          level = 'Rarity level 11'
+          level = 11
            break
         default:
-          level = 'Rarity: Unique'
+          level = 100
       }
       return level
     }

@@ -12,24 +12,56 @@
 body {
   font-family: 'Libre Franklin', sans-serif;
   box-sizing: border-box;
-  padding: 0 15rem;
+  
+}
+
+header {
+  background-color: #33448A;
+  height: 3rem;
+  padding: 1rem;
+  color: white;
+  min-width: 340px;
+}
+
+.control-panel {
+  padding: 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  /* border: 2px solid pink; training wheels */
+  
+}
+
+.control-container {
+  margin: 10px;
+  text-align: center;
+}
+
+main {
+  /* background-color: #7184D0; */
+  padding: 0 2rem;
+  color: black;
+  min-width: 340px;
 }
 
 .bold {
   font-weight: 700
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  border: 2px solid black; /*training wheels */
-  margin: auto
+  /* border: 2px solid pink; training wheels */
+  margin: auto;
 }
 
 .wrapper-internal {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  border: 2px solid black; /*training wheels */
+  grid-template-columns: repeat(auto-fill, minmax(.5fr, 1fr));
+  /* border: 2px solid blue; training wheels */
   margin: auto
 }
 
@@ -40,16 +72,19 @@ body {
 .reaper-card-deck {
   border: black 1px solid;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
 
 }
 
 .card {
-  border: black 1px solid
+  border: black 1px solid;
+
 }
 
 .card {
-  min-width: 370px
+  min-width: 370px;
 }
 
 .button {
@@ -63,19 +98,6 @@ body {
 .button:hover {
   background-color: #777;
   color: white;
-}
-
-header {
-  background-color: #33448A;
-  height: 3rem;
-  padding: 1rem;
-  color: white;
-}
-
-main {
-  /* background-color: #7184D0; */
-  padding: 0 2rem;
-  color: black
 }
 
 table {
@@ -121,61 +143,38 @@ h6 {
   margin:0;
 }
 
-.control-panel {
-  padding: 2rem 0;
-}
-
 a {
   color: yellow;
 }
 
+@media (max-width: 800px) {
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: auto
+  }
 
+  .control-panel {
+    padding: 1rem  0;
+    display: grid;
+    grid-template-columns: 1fr;
+    
+  }
 
+}
 
+@media (max-width: 1200px) {
+  body {
+    font-family: 'Libre Franklin', sans-serif;
+    box-sizing: border-box;
+    margin:auto;
+  }
 
+}
 
-/* Training Wheels */
-
-/* header
+@media print  
 {
-  background-color: green;
+    div{
+        page-break-inside: avoid;
+    }
 }
-
-main {
-  background-color: red;
-  text-align: center
-}
-
-aside {
-  background-color: purple;
-  padding: 0 1rem
-}
-
-footer {
-  background-color: yellow;
-  grid-column: span 2;
-}
-
-.control-panel  {
-  border: 1px solid black;
-}
-.dev-display {
-  border: 1px solid black;
-}
-
-.stat-containter{
-  border: 1px solid black;
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-

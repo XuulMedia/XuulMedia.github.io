@@ -23,7 +23,8 @@ const partCategorizer = function (partType) {
   return arr
 }
 
-
+const thrash = `Thrash. Melee Weapon Attack; +2 to hit, Reach 5ft., one target. Hit: 1D8 +1
+)}. Bludgeoning.`;
 
 const app = new Vue({
   el: '#app',
@@ -32,6 +33,7 @@ const app = new Vue({
     noFirstRoll: false,
     soul: true,
     rolled: false,
+    devloperMode: false,
 
     numOfReapers: 0,
     reapers: [],
@@ -49,6 +51,8 @@ const app = new Vue({
     overrideWis: false,
     overrideCha: false,
     overrideSol: false,
+
+    name: 'Reaper',
 
     str: { set: function () { return this._str } },
     dex: { set: function () { return this._dex } },
@@ -222,72 +226,7 @@ const app = new Vue({
       this.overrideSol = false
 
     },
-
-    generateReaper: function () {
-      this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3))
-      this.head = this.multiPart(this._head)
-      this.headTraits = this.multiPartTraits(this._head)
-
-      this._body = this.selectPart(partCategorizer('Body'))
-      this.body = this._body[0].name + ' ' + this._body[0].type
-      this.bodyTraits = this._body[0].traits
-
-      this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4))
-      this.arms = this.multiPart(this._arms)
-      this.armsTraits = this.multiPartTraits(this._arms)
-
-      this._legs = this.selectPart(partCategorizer('Legs'))
-      this.legs = this._legs[0].name + ' ' + this._legs[0].type
-      this.legsTraits = this._legs[0].traits
-
-      
-
-      // this.traits = this.traitCollector()
-      // let actions =
-
-      let creature = this.createReaperCard()
-      this.reapers[this.numOfReapers] = creature
-
-      this.numOfReapers++
-      this.noFirstRoll = false
-      this.rolled = false
-
-
-    },
-
-    reset: function () {
-      this.noFirstRoll = false
-      this.rolled = false
-      this.overrideStr = false
-      this.overrideDex = false
-      this.overrideCon = false
-      this.overrideInt = false
-      this.overrideWis = false
-      this.overrideCha = false
-      this.overrideSol = false
-
-
-      this.head = null
-      this.body = null
-      this.arms = null
-      this.legs = null
-
-      this.str = null
-      this.dex = null
-      this.con = null
-      this.int = null
-      this.wis = null
-      this.cha = null
-      this.sol = null
-
-      this.strMod = null
-      this.dexMod = null
-      this.conMod = null
-      this.intMod = null
-      this.wisMod = null
-      this.chaMod = null
-      this.solMod = null
-    },
+    
 
     multiPart: function (array) {
       let output
@@ -301,6 +240,55 @@ const app = new Vue({
         output = array[0].type + 's(4): ' + array[0].name + ', ' + array[1].name + ', ' + array[2].name + ', & ' + array[3].name
       }
       return output
+    },
+
+    selectPart: function (allPartArray, num) {
+      let selection = []
+      let selectionPool = []
+      allPartArray.forEach(indexNum => {
+        let reaperSkill
+        switch (indexNum.requirementType) {
+          case 'STR':
+            reaperSkill = app.str
+            break
+          case 'DEX':
+            reaperSkill = app.dex
+            break
+          case 'CON':
+            reaperSkill = app.con
+            break
+          case 'INT':
+            reaperSkill = app.int
+            break
+          case 'WIS':
+            reaperSkill = app.wis
+            break
+          case 'CHA':
+            reaperSkill = app.cha
+            break
+          case 'SOL':
+            reaperSkill = app.sol
+            break
+        }
+        if (reaperSkill >= indexNum.requirementAmount) {
+          selectionPool.push(indexNum)
+        }
+      })
+      
+      if (num == 4) {
+        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+      }
+      else if (num == 2) {
+        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+      } else if (num == 3) {
+        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
+      } else {
+        selection = [selectionPool[dice(selectionPool.length - 1)]]
+      }
+
+     
+
+      return selection
     },
 
     multiPartTraits: function (array) {
@@ -364,7 +352,209 @@ const app = new Vue({
       return limbs
     },
 
+    traitCollector: function () {
+      let allTraits = []
+
+      this.legsTraits.forEach(element => {
+        allTraits.push(element)
+      });
+
+      this.bodyTraits.forEach(element => {
+        allTraits.push(element)
+      });
+
+      this.armsTraits.forEach(element => {
+          allTraits.push(element)
+      });
+
+      this.headTraits.forEach(element => {
+        allTraits.push(element)
+      });
+
+      allTraits=  allTraits.flat()
+
+      allTraits= allTraits.filter(function (trait, index) {
+        return trait != null && allTraits.indexOf(trait) >= index && Array.isArray(trait) == false
+      })
+
+
+
+      return allTraits
+    },
+
+    multiPartActions: function (array) {
+      let output
+      if (array.length == 1) {
+        output = [array[0].actions]
+      } else if (array.length == 2) {
+        output = [array[0].actions, array[1].actions]
+      } else if (array.length == 3) {
+        output = [array[0].actions, array[1].actions, array[2].actions]
+      } else if (array.length == 4) {
+        output = [array[0].actions, array[1].actions, array[2].actions, array[3].actions]
+      }
+      output = output.flat()
+     
+      return output
+    },
+
+  actionCollector: function () {
+      let allActions = []
+
+      this.legsActions.forEach(element => {
+        allActions.push(element)
+      });
+
+      this.bodyActions.forEach(element => {
+        allActions.push(element)
+      });
+
+      this.armsActions.forEach(element => {
+          allActions.push(element)
+      });
+
+      this.headActions.forEach(element => {
+        allActions.push(element)
+      });
+
+      allActions=  allActions.flat()
+
+      
+
+      allActions= allActions.filter(function (trait, index) {
+        return trait != null && allActions.indexOf(trait) >= index && Array.isArray(trait) == false
+      })
+   
+      return allActions
+    },
+
     selectReaperName: function (){
+      let chosenName
+      let allParts =[this._head, this._body, this._legs, this._arms]
+
+      allParts = allParts.flat()
+
+      let rarityArray= []
+
+      allParts.forEach(element => {
+        let rare = element.rarity()
+         rarityArray.push(rare)
+      });
+
+           
+      chosenName = allParts[this.indexOfMax(rarityArray)].name + ' ' +allParts[this.indexOfMax(rarityArray)].type
+    
+      return chosenName
+    },
+
+    toHit: function (stat) {
+      let hit
+      switch (stat) {
+        case 'STR':
+          hit = app.strMod
+          break
+        case 'DEX':
+          hit = app.dexMod
+          break
+        case 'CON':
+          hit = app.conMod
+          break
+        case 'INT':
+          hit = app.intMod
+          break
+        case 'WIS':
+          hit = app.wisMod
+          break
+        case 'CHA':
+          hit = app.chaMod
+          break
+        case 'SOL':
+          hit = app.solMod
+          break
+}
+    if (hit > 0) {
+      hit = '+'+hit
+    }
+    return hit
+    },
+
+    actionWriter: function () {
+      let output = []
+      if(this.allActions.length <= 0){
+        output.push(thrash)
+      }
+
+      this.allActions.forEach(element => {
+        let ability
+        if (element.statReq != 'Spell'){
+        ability = element.name + ' ' + element.type + ' ' + this.toHit(element.statReq) + ' to hit, ' + element.range +  element.dmg + element.dmgtype
+        } else if (element.statReq == 'Spell'){
+          ability = element.name + element.recharge + element.effect
+        }
+        output.push(ability)
+      });
+      return output
+    },
+
+  indexOfMax: function (arr) {
+      if (arr.length === 0) {
+          return -1;
+      }
+  
+      let max = arr[0];
+      let maxIndex = 0;
+  
+      for (let i = 1; i < arr.length; i++) {
+          if (arr[i] > max) {
+              maxIndex = i;
+              max = arr[i];
+          }
+      }
+
+      return maxIndex;
+  },
+
+    generateReaper: function () {
+      this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3))
+      this.head = this.multiPart(this._head)
+      this.headTraits = this.multiPartTraits(this._head)
+      this.headActions = this.multiPartActions(this._head)
+
+      this._body = this.selectPart(partCategorizer('Body'))
+      this.body = this._body[0].name + ' ' + this._body[0].type
+      this.bodyTraits = this._body[0].traits
+      this.bodyActions = this._body[0].actions
+
+      this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4))
+      this.arms = this.multiPart(this._arms)
+      this.armsTraits = this.multiPartTraits(this._arms)
+      this.armsActions = this.multiPartActions(this._arms)
+
+      this._legs = this.selectPart(partCategorizer('Legs'))
+      this.legs = this._legs[0].name + ' ' + this._legs[0].type
+      this.legsTraits = this._legs[0].traits
+      this.legsActions = this._legs[0].actions
+
+      this._name = this.selectReaperName()
+      this.name = this._name
+      this.challengeRating = this.challengeRating,
+     
+
+      this._traits = this.traitCollector()
+      this.traits = this._traits
+      
+      this.allActions = this.actionCollector()
+      this._actions = this.actionWriter()
+      console.log(this.actions + 'actions')
+      this.actions = this._actions
+
+      let creature = this.createReaperCard()
+      this.reapers[this.numOfReapers] = creature
+
+      this.numOfReapers++
+      this.noFirstRoll = false
+      this.rolled = false
+
 
     },
 
@@ -381,6 +571,8 @@ const app = new Vue({
         size: this.size,
         HP: this.HP,
         AC: this.AC,
+        name: this.name,
+        CR: this.challengeRating,
 
         strMod: this.strMod,
         dexMod: this.dexMod,
@@ -396,91 +588,47 @@ const app = new Vue({
         arms: this.arms,
         legs: this.legs,
 
+        traits: this.traits,
+        actions: this.actions,
       }
-
       return monster
-
-
-
     },
 
-    traitCollector: function () {
-      let allTraits = []
+    reset: function () {
+      this.noFirstRoll = false
+      this.rolled = false
+      this.overrideStr = false
+      this.overrideDex = false
+      this.overrideCon = false
+      this.overrideInt = false
+      this.overrideWis = false
+      this.overrideCha = false
+      this.overrideSol = false
 
-      this.legs[0].traits.forEach(element => {
-        allTraits.push(element)
-      })
 
-      this.arms.forEach(element => {
-        element.traits.forEach(ele => {
-          allTraits.push(ele)
-        })
-      });
+      this.head = null
+      this.body = null
+      this.arms = null
+      this.legs = null
 
-      this.heads.forEach(element => {
-        element.traits.forEach(ele => {
-          allTraits.push(ele)
-        })
-      });
+      this.str = null
+      this.dex = null
+      this.con = null
+      this.int = null
+      this.wis = null
+      this.cha = null
+      this.sol = null
 
-      this.body.forEach(element => {
-        element.traits.forEach(ele => {
-          allTraits.push(ele)
-        })
-      });
-
-      return allTraits
+      this.strMod = null
+      this.dexMod = null
+      this.conMod = null
+      this.intMod = null
+      this.wisMod = null
+      this.chaMod = null
+      this.solMod = null
     },
 
 
-    selectPart: function (allPartArray, num) {
-      let selection = []
-      let selectionPool = []
-      allPartArray.forEach(indexNum => {
-        let reaperSkill
-        switch (indexNum.requirementType) {
-          case 'STR':
-            reaperSkill = app.str
-            break
-          case 'DEX':
-            reaperSkill = app.dex
-            break
-          case 'CON':
-            reaperSkill = app.con
-            break
-          case 'INT':
-            reaperSkill = app.int
-            break
-          case 'WIS':
-            reaperSkill = app.wis
-            break
-          case 'CHA':
-            reaperSkill = app.cha
-            break
-          case 'SOL':
-            reaperSkill = app.sol
-            break
-        }
-        if (reaperSkill >= indexNum.requirementAmount) {
-          selectionPool.push(indexNum)
-        }
-      })
-      console.log(num)
-      if (num == 4) {
-        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-      }
-      else if (num == 2) {
-        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-      } else if (num == 3) {
-        selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-      } else {
-        selection = [selectionPool[dice(selectionPool.length - 1)]]
-      }
-
-      console.log(selection)
-
-      return selection
-    },
   },
 }
 )
@@ -533,81 +681,5 @@ Vue.component('reaper-card', {
   data: function () {
 
   }
-
-
-
-})
-
-
-
-// for the template use numOfReapers as a variable for the ID. The can just continue to add reapers that will have a different ID
-// after that refactor the card to a textbox with a copy button on the card and just under the console.
-
-
-
-// let allHeads = partCategorizer('Head')
-
-
-// const selectPart = function (allPartArray, num) {
-//   let selection = []
-//   let selectionPool = []
-//   allPartArray.forEach(indexNum => {
-//     let testLevel
-//     switch (indexNum.requirementType) {
-//       case 'STR':
-//         testLevel = app.str
-//         break
-//       case 'DEX':
-//         testLevel = app.dex
-//         break
-//       case 'CON':
-//         testLevel = app.con
-//         break
-//       case 'INT':
-//         testLevel = app.int
-//         break
-//       case 'WIS':
-//         testLevel = app.wis
-//         break
-//       case 'CHA':
-//         testLevel = app.cha
-//         break
-//       case 'SOL':
-//         testLevel = app.sol
-//         break
-//     }
-//     if (testLevel = indexNum.requirementAmount) {
-//       selectionPool.push(indexNum)
-//     }
-//   })
-
-//   if(num) {
-//       switch(num){
-//         case 1:
-//           selection = [selectionPool[dice(selectionPool.length - 1)]]
-//           break
-//         case 2:
-//           selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-//           break
-//         case 3:
-//           selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-//           break
-//         case 4:
-//           selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
-//           break
-//         default:
-//           selection = [selectionPool[dice(selectionPool.length - 1)]]
-//           break
-//       }
-//     } else {
-//       selection = [selectionPool[dice(selectionPool.length - 1)]]
-//     }
-
-
-//     return selection
-//   };
-
-
-//   console.log(allHeads[1].name + allHeads[1].type)
-// let chosenHead = selectPart(allHeads)
-// console.log(chosenHead[0].name)
+}
+)
