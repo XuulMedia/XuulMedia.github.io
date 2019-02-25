@@ -39,6 +39,7 @@ const app = new Vue({
 
     speed: 30,
     speedType: '',
+    
 
     numOfHeads: 0,
     numOfArms: 0,
@@ -53,6 +54,9 @@ const app = new Vue({
     overrideWis: false,
     overrideCha: false,
     overrideSol: false,
+
+    overrideHP:false,
+    overrideAC:false,
 
     name: 'Reaper',
 
@@ -78,6 +82,8 @@ const app = new Vue({
     armsTraits: '',
     legsTraits: '',
 
+    
+
 
     traits: '',
     actions: '',
@@ -91,7 +97,6 @@ const app = new Vue({
     wisMod: function () { return calcAttributeMod(this.wis) },
     chaMod: function () { return calcAttributeMod(this.cha) },
     solMod: function () { return calcAttributeMod(this.sol) },
-
 
   },
 
@@ -149,7 +154,6 @@ const app = new Vue({
       this.size = this.calcSize()
       this.HP = this.calcHP()
       this.AC = this.calcAC()
-
 
     },
 
@@ -219,7 +223,8 @@ const app = new Vue({
     confirmTheRoll: function () {
       this.noFirstRoll = false
       this.rolled = !this.rolled
-     
+      this.speedType = ''
+      this.speed = 30
 
     },
 
@@ -537,15 +542,15 @@ const app = new Vue({
           this.HP -= 5
         } else if (element == "Vigor") {
           this.HP += 5
-        } else if (element == "HealthyConstitution") {
+        } else if (element == "Healthy Constitution") {
           this.HP += 10
         } else if (element == "Robust") {
           this.HP += 15
-        } else if (element == "TopForm") {
+        } else if (element == "Top Form") {
           this.HP *= 2
         } else if (element == "Tough") {
           this.AC += 1
-        } else if (element == "VoidicResistance") {
+        } else if (element == "Voidic Resistance") {
           this.AC += 2
         } else if (element == "Armored") {
           this.AC += 3
@@ -554,13 +559,16 @@ const app = new Vue({
         } else if (element == "Weak Flight") {
           this.AC -= 2
           this.speedType = 'Flying'
+        }else if (element == "Mighty Flight") {
+          this.AC += 2
+          this.speedType = 'Flying'
         } else if (element == "Flight") {
           this.speedType = 'Flying'
         } else if (element == "Fast") {
           this.speed += 10
-        } else if (element == "VeryFast") {
+        } else if (element == "Very Fast") {
           this.speed += 20
-        } else if (element == "TemporallyFast") {
+        } else if (element == "Temporally Fast") {
           this.speed += 40
         } else if (element == "Immobile") {
           this.speed = 0
@@ -570,7 +578,7 @@ const app = new Vue({
           this.AC += 2
         } else if (element == 'Slow') {
           this.speed -= 10
-        }
+        } 
         return this._rawTraits
       });
 
@@ -601,6 +609,8 @@ const app = new Vue({
       this._name = this.selectReaperName()
       this.name = this._name
       this.challengeRating = this.challengeRating,
+      this.speedType =  this.speedType
+      this.speed = this.speed
 
 
       this._rawTraits = this.traitCollector()

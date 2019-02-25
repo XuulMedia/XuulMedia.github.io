@@ -122,7 +122,7 @@ koroArm         : new Part('Arm', 'Korodian', 'STR', 4 , [T.armable, T.vigor], [
 hemlinArm       : new Part('Arm', 'Hemlin', 'WIS', 4 , [T.armable, T.weak], [null]),
 stumpArm        : new Part('Arm', 'Fleshy Stump', 'CON', 2 , [null], [A.stump]),
 maceArm         : new Part('Arm', 'Bone Stump Mace', 'STR', 8 , [null], [A.mace]),
-MaulArm         : new Part('Arm', 'Tumerous Maul', 'STR', 12 , [null], [A.maul]),
+MaulArm         : new Part('Arm', 'Tumerous Maul', 'STR', 13 , [null], [A.maul]),
 clawArm         : new Part('Arm', 'Claws', 'DEX', 6 , [T.claw], [A.claw]),
 sytheArm        : new Part('Arm', 'Sythe Claw', 'DEX', 10 , [null], [A.sytheClaw]),
 shearArm        : new Part('Arm', 'Shearing Claw', 'DEX', 15 , [null], [A.shearClaw]),

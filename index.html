@@ -24,13 +24,16 @@
   <div id="app" class="wrapper">
     <main>
       <h2>Reaper Generator</h2>
+    
       <div class="control-panel">
         <div class="control-container">
+
+          
         
         <label for="Toggle Soul">
-        <input type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
+        <input class="checkbox" type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
         Enable Soul?</label>
-
+          <br>
         <label for="challengeRating">
           <select class="dropdown" v-model="challengeRating" v-bind:disabled="rolled" id="crLevel">
             <option value="1">01</option>
@@ -54,7 +57,7 @@
             <option value="19">19</option>
             <option value="20">20</option>
           </select>
-          Player Level</label>
+          Challenge Rating</label>
         </div>
         <div class="control-container">
         <button class="button" v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
@@ -65,11 +68,11 @@
       </div>
       <div class="wrapper-internal">
         <div class="stat-container">
-          <table>
+          <table class="stat-display">
             <tr>
-              <td class="bold underline">Value</td>
-              <td class="bold underline">Override?</td>
-              <td class="bold underline">Stat</td>
+              <th class="bold underline">Statistic</td>
+              <th class="bold underline">Value</td>
+              <th class="bold underline">Override</th>
             </tr>
             <tr>
               <td>STR</td>
@@ -106,7 +109,18 @@
               <td><input type="number" name="SOL" id="SOL" min=1 max=20 v-model="sol" v-bind:disabled="!overrideSol"></td>
               <td><input type="checkbox" v-model="overrideSol" v-bind:disabled="rolled"> </td>
             </tr>
+            <tr>
+              <td>Health</td>
+              <td><input type="number" name="HP" id="HP" min=1 max=400 v-model="HP" v-bind:disabled="!overrideHP"></td>
+              <td><input type="checkbox" v-model="overrideHP" v-bind:disabled="rolled"> </td>
+            </tr>
+            <tr>
+              <td>AC</td>
+              <td><input type="number" name="AC" id="AC" min=1 max=30 v-model="AC" v-bind:disabled="!overrideAC"></td>
+              <td><input type="checkbox" v-model="overrideAC" v-bind:disabled="rolled"> </td>
+            </tr>
           </table>
+
         </div>
         <div class="stat-container">
 
@@ -124,7 +138,7 @@
           <p> alltraits = {{traits}} </p>
         </div>
       </div>
-      <h5>Reapers</h5>
+      <h3>Reapers</h3>
       <br>
       <div class="reaper-card-deck" >
           <div v-for="index of reapers">
@@ -135,7 +149,7 @@
               <div class="card-text"> 
                 <p> Armor Class: {{index.AC}}</p>
                 <p> Hit Points: {{index.HP}}</p>
-                <p> Speed: {{index.speed}} {{speedType}}</p>
+                <p> Speed: {{index.speed}} {{index.speedType}}</p>
               </div>
               <hr />
               <table>
@@ -203,7 +217,7 @@
         a powerful foe that would best be avoided.
         <p>For those seeking a more tailored experience the generator permits overriding of some statistics, however
           this still only opens up the pool of parts to the specified level. Your reaper still may end up weak if the
-          'dice' roll poorly for part selection.</p>
+          'dice' roll poorly for part selection. If you want balance, then it is up to you as a DM to only use the reapers you think will fit the situation.</p>
         <p>Possible Future plans for this generator include
           <ul>
             <li>A password or code system to unlock special custom tailored reapers</li>

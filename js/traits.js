@@ -27,15 +27,15 @@ export const allTraits = {
  slow : 'Slow: -10ft speed',
  fragile : 'Fragile: Creature is vulnerable to all Bludgeoning Damage.',
 
- weakFlight : 'Flight: Movement of 20ft flying. -2 AC.',
+ weakFlight : 'Weak Flight: Movement of 20ft flying. -2 AC.',
  flight : 'Flight: Movement of 30ft flying',
- mightyFlight : 'Flight: Movement of 30ft flying. +3 AC',
+ mightyFlight : 'Mighty Flight: Movement of 30ft flying. +3 AC',
  psychicFlight :
   'Psychic Flight: Grants a movement of 30ft flying to all nearby friendly creatures within 15ft. Flight persists for two turns while away from the aura and ends immediatly upon this reapers death.',
 
  fast : 'Fast: +10 Movement',
- veryFast : 'Fast: +20 Movement',
- temporallyFast : 'Fast: +40 Movement',
+ veryFast : 'Very Fast: +20 Movement',
+ temporallyFast : 'Temporally Fast: +40 Movement',
  immobile : 'Immobile: Set movement to 0',
 
  steady : 'Steady: Has advantage against being knocked down.',
