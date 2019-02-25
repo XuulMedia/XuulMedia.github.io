@@ -23,8 +23,7 @@ const partCategorizer = function (partType) {
   return arr
 }
 
-const thrash = `Thrash. Melee Weapon Attack; +2 to hit, Reach 5ft., one target. Hit: 1D8 +1
-)}. Bludgeoning.`;
+const thrash = `Thrash. Melee Weapon Attack; +2 to hit, Reach 5ft., one target. Hit: 1D6 +1. Bludgeoning.`;
 
 const app = new Vue({
   el: '#app',
@@ -81,7 +80,7 @@ const app = new Vue({
 
 
     traits: '',
-    actions: '', 
+    actions: '',
 
   },
   computed: {
@@ -220,24 +219,18 @@ const app = new Vue({
     confirmTheRoll: function () {
       this.noFirstRoll = false
       this.rolled = !this.rolled
-      this.overrideStr = false
-      this.overrideDex = false
-      this.overrideCon = false
-      this.overrideInt = false
-      this.overrideWis = false
-      this.overrideCha = false
-      this.overrideSol = false
+     
 
     },
-    
+
 
     multiPart: function (array, typ) {
-        let type
-      switch (typ){
+      let type
+      switch (typ) {
         case 'Heads': type = this.numOfHeads
           break
         case 'Arms': type = this.numOfArms
-        break
+          break
       }
 
       let output
@@ -290,7 +283,7 @@ const app = new Vue({
           selectionPool.push(indexNum)
         }
       })
-      
+
       if (num == 4) {
         selection = [selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)], selectionPool[dice(selectionPool.length - 1)]]
       }
@@ -302,7 +295,7 @@ const app = new Vue({
         selection = [selectionPool[dice(selectionPool.length - 1)]]
       }
 
-     
+
 
       return selection
     },
@@ -318,7 +311,7 @@ const app = new Vue({
       } else if (array.length == 4) {
         output = [array[0].traits, array[1].traits, array[2].traits, array[3].traits]
       }
-      
+
       return output
     },
 
@@ -380,22 +373,22 @@ const app = new Vue({
       });
 
       this.armsTraits.forEach(element => {
-          allTraits.push(element)
+        allTraits.push(element)
       });
 
       this.headTraits.forEach(element => {
         allTraits.push(element)
       });
 
-      allTraits=  allTraits.flat()
-    
+      allTraits = allTraits.flat()
 
-      allTraits= allTraits.filter(function (trait, index) {
+
+      allTraits = allTraits.filter(function (trait, index) {
         return trait != null && allTraits.indexOf(trait) >= index && Array.isArray(trait) == false
       })
-  
 
-      
+
+
 
 
 
@@ -414,11 +407,11 @@ const app = new Vue({
         output = [array[0].actions, array[1].actions, array[2].actions, array[3].actions]
       }
       output = output.flat()
-     
+
       return output
     },
 
-  actionCollector: function () {
+    actionCollector: function () {
       let allActions = []
 
       this.legsActions.forEach(element => {
@@ -430,40 +423,40 @@ const app = new Vue({
       });
 
       this.armsActions.forEach(element => {
-          allActions.push(element)
+        allActions.push(element)
       });
 
       this.headActions.forEach(element => {
         allActions.push(element)
       });
 
-      allActions=  allActions.flat()
+      allActions = allActions.flat()
 
-      
 
-      allActions= allActions.filter(function (trait, index) {
+
+      allActions = allActions.filter(function (trait, index) {
         return trait != null && allActions.indexOf(trait) >= index && Array.isArray(trait) == false
       })
-   
+
       return allActions
     },
 
-    selectReaperName: function (){
+    selectReaperName: function () {
       let chosenName
-      let allParts =[this._head, this._body, this._legs, this._arms]
+      let allParts = [this._head, this._body, this._legs, this._arms]
 
       allParts = allParts.flat()
 
-      let rarityArray= []
+      let rarityArray = []
 
       allParts.forEach(element => {
         let rare = element.rarity()
-         rarityArray.push(rare)
+        rarityArray.push(rare)
       });
 
-           
-      chosenName = allParts[this.indexOfMax(rarityArray)].name + ' ' +allParts[this.indexOfMax(rarityArray)].type
-    
+
+      chosenName = allParts[this.indexOfMax(rarityArray)].name + ' ' + allParts[this.indexOfMax(rarityArray)].type
+
       return chosenName
     },
 
@@ -491,24 +484,24 @@ const app = new Vue({
         case 'SOL':
           hit = app.solMod
           break
-}
-    if (hit > 0) {
-      hit = '+'+hit
-    }
-    return hit
+      }
+      if (hit > 0) {
+        hit = '+' + hit
+      }
+      return hit
     },
 
     actionWriter: function () {
       let output = []
-      if(this.allActions.length <= 0){
+      if (this.allActions.length <= 0) {
         output.push(thrash)
       }
 
       this.allActions.forEach(element => {
         let ability
-        if (element.statReq != 'Spell'){
-        ability = element.name + ' ' + element.type + ' ' + this.toHit(element.statReq) + ' to hit, ' + element.range +  element.dmg + element.dmgType
-        } else if (element.statReq == 'Spell'){
+        if (element.statReq != 'Spell') {
+          ability = element.name + ' ' + element.type + ' ' + this.toHit(element.statReq) + ' to hit, ' + element.range + element.dmg + element.dmgType
+        } else if (element.statReq == 'Spell') {
           ability = element.name + element.recharge + element.effect
         }
         output.push(ability)
@@ -516,79 +509,76 @@ const app = new Vue({
       return output
     },
 
-  indexOfMax: function (arr) {
+    indexOfMax: function (arr) {
       if (arr.length === 0) {
-          return -1;
+        return -1;
       }
-  
+
       let max = arr[0];
       let maxIndex = 0;
-  
+
       for (let i = 1; i < arr.length; i++) {
-          if (arr[i] > max) {
-              maxIndex = i;
-              max = arr[i];
-          }
+        if (arr[i] > max) {
+          maxIndex = i;
+          max = arr[i];
+        }
       }
 
       return maxIndex;
-  },
+    },
 
-  traitApplier: function () {
+    traitApplier: function () {
 
-    this._rawTraits.forEach(ele => {
+      this._rawTraits.forEach(ele => {
         let element = ele.split(":", 1)
         console.log('element' + element)
 
-      if (element == "Frail") {
-        this.HP -= 5
-      } else if (element == "Vigor") {
-        this.HP += 5
-      } else if (element == "HealthyConstitution") {
-        this.HP += 10
-      } else if (element == "Robust") {
-        this.HP += 15
-      } else if (element == "TopForm") {
-        this.HP *= 2
-      } else if (element == "Tough") {
-        this.AC += 1
-      } else if (element == "VoidicResistance") {
-        this.AC += 2
-      } else if (element == "Armored") {
-        this.AC += 3
-      } else if (element == "Bulwark") {
-        this.AC += 5
-      } else if (element == "Weak Flight") {
-        this.AC -= 2
-        this.speedType = 'Flying'
-      } else if (element == "Mighty Flight") {
-        this.AC += 3
-        this.speedType = 'Flying'
-      } else if (element == "Fast") {
-        this.speed += 10
-      } else if (element == "VeryFast") {
-        this.speed += 20
-      } else if (element == "TemporallyFast") {
-        this.speed += 40
-      } else if (element == "Immobile") {
-        this.speed = 0
-      } else if (element == 'Psychic Flight'){
-        this.speedType = '| 30ft Flying'
-      } else if (element == 'Agile'){
-        this.AC +=2
-      } else if (element == 'Slow'){
-        this.speed -= 10
-      }
-      return this._rawTraits
-    });
+        if (element == "Frail") {
+          this.HP -= 5
+        } else if (element == "Vigor") {
+          this.HP += 5
+        } else if (element == "HealthyConstitution") {
+          this.HP += 10
+        } else if (element == "Robust") {
+          this.HP += 15
+        } else if (element == "TopForm") {
+          this.HP *= 2
+        } else if (element == "Tough") {
+          this.AC += 1
+        } else if (element == "VoidicResistance") {
+          this.AC += 2
+        } else if (element == "Armored") {
+          this.AC += 3
+        } else if (element == "Bulwark") {
+          this.AC += 5
+        } else if (element == "Weak Flight") {
+          this.AC -= 2
+          this.speedType = 'Flying'
+        } else if (element == "Flight") {
+          this.speedType = 'Flying'
+        } else if (element == "Fast") {
+          this.speed += 10
+        } else if (element == "VeryFast") {
+          this.speed += 20
+        } else if (element == "TemporallyFast") {
+          this.speed += 40
+        } else if (element == "Immobile") {
+          this.speed = 0
+        } else if (element == 'Psychic Flight') {
+          this.speedType = '| 30ft Flying'
+        } else if (element == 'Agile') {
+          this.AC += 2
+        } else if (element == 'Slow') {
+          this.speed -= 10
+        }
+        return this._rawTraits
+      });
 
 
-  },
-
+    },
 
     generateReaper: function () {
-    numOfHeads: 0,
-    this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3, 'Heads'))
+      this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3, 'Heads'))
       this.head = this.multiPart(this._head)
       this.headTraits = this.multiPartTraits(this._head)
       this.headActions = this.multiPartActions(this._head)
@@ -611,12 +601,12 @@ const app = new Vue({
       this._name = this.selectReaperName()
       this.name = this._name
       this.challengeRating = this.challengeRating,
-     
+
 
       this._rawTraits = this.traitCollector()
       this.traitApplier()
       this.traits = this._rawTraits
-      
+
       this.allActions = this.actionCollector()
       this._actions = this.actionWriter()
       console.log(this.actions + 'actions')
@@ -634,42 +624,42 @@ const app = new Vue({
 
     createReaperCard: function () {
       let monster =
-      this.monster = {
-        str: this.str,
-        dex: this.dex,
-        con: this.con,
-        int: this.int,
-        wis: this.wis,
-        cha: this.cha,
-        sol: this.sol,
-        size: this.size,
-  
-        name: this.name,
-        CR: this.challengeRating,
+        this.monster = {
+          str: this.str,
+          dex: this.dex,
+          con: this.con,
+          int: this.int,
+          wis: this.wis,
+          cha: this.cha,
+          sol: this.sol,
+          size: this.size,
 
-        strMod: this.strMod,
-        dexMod: this.dexMod,
-        conMod: this.conMod,
-        intMod: this.intMod,
-        wisMod: this.wisMod,
-        chaMod: this.chaMod,
-        solMod: this.solMod,
+          name: this.name,
+          CR: this.challengeRating,
+
+          strMod: this.strMod,
+          dexMod: this.dexMod,
+          conMod: this.conMod,
+          intMod: this.intMod,
+          wisMod: this.wisMod,
+          chaMod: this.chaMod,
+          solMod: this.solMod,
 
 
-        head: this.head,
-        body: this.body,
-        arms: this.arms,
-        legs: this.legs,
+          head: this.head,
+          body: this.body,
+          arms: this.arms,
+          legs: this.legs,
 
-        traits: this.traits,
-        actions: this.actions,
+          traits: this.traits,
+          actions: this.actions,
 
-        speed: this.speed,
-        speedType: this.speedType,
+          speed: this.speed,
+          speedType: this.speedType,
 
-        HP: this.HP,
-        AC: this.AC,
-      }
+          HP: this.HP,
+          AC: this.AC,
+        }
       return monster
     },
 
