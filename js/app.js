@@ -41,6 +41,9 @@ const app = new Vue({
     speed: 30,
     speedType: '',
 
+    numOfHeads: 0,
+    numOfArms: 0,
+
 
     challengeRating: 3,
 
@@ -228,17 +231,30 @@ const app = new Vue({
     },
     
 
-    multiPart: function (array) {
+    multiPart: function (array, typ) {
+        let type
+      switch (typ){
+        case 'Heads': type = this.numOfHeads
+          break
+        case 'Arms': type = this.numOfArms
+        break
+      }
+
       let output
       if (array.length == 1) {
         output = array[0].name + ' ' + array[0].type
+        type = 1
       } else if (array.length == 2) {
         output = array[0].type + 's(2): ' + array[0].name + ' & ' + array[1].name
+        type = 2
       } else if (array.length == 3) {
         output = array[0].type + 's(3): ' + array[0].name + ', ' + array[1].name + ', & ' + array[2].name
+        type = 3
       } else if (array.length == 4) {
         output = array[0].type + 's(4): ' + array[0].name + ', ' + array[1].name + ', ' + array[2].name + ', & ' + array[3].name
+        type = 4
       }
+
       return output
     },
 
@@ -372,10 +388,14 @@ const app = new Vue({
       });
 
       allTraits=  allTraits.flat()
+    
 
       allTraits= allTraits.filter(function (trait, index) {
         return trait != null && allTraits.indexOf(trait) >= index && Array.isArray(trait) == false
       })
+  
+
+      
 
 
 
@@ -487,7 +507,7 @@ const app = new Vue({
       this.allActions.forEach(element => {
         let ability
         if (element.statReq != 'Spell'){
-        ability = element.name + ' ' + element.type + ' ' + this.toHit(element.statReq) + ' to hit, ' + element.range +  element.dmg + element.dmgtype
+        ability = element.name + ' ' + element.type + ' ' + this.toHit(element.statReq) + ' to hit, ' + element.range +  element.dmg + element.dmgType
         } else if (element.statReq == 'Spell'){
           ability = element.name + element.recharge + element.effect
         }
@@ -514,8 +534,61 @@ const app = new Vue({
       return maxIndex;
   },
 
+  traitApplier: function () {
+
+    this._rawTraits.forEach(ele => {
+        let element = ele.split(":", 1)
+        console.log('element' + element)
+
+      if (element == "Frail") {
+        this.HP -= 5
+      } else if (element == "Vigor") {
+        this.HP += 5
+      } else if (element == "HealthyConstitution") {
+        this.HP += 10
+      } else if (element == "Robust") {
+        this.HP += 15
+      } else if (element == "TopForm") {
+        this.HP *= 2
+      } else if (element == "Tough") {
+        this.AC += 1
+      } else if (element == "VoidicResistance") {
+        this.AC += 2
+      } else if (element == "Armored") {
+        this.AC += 3
+      } else if (element == "Bulwark") {
+        this.AC += 5
+      } else if (element == "Weak Flight") {
+        this.AC -= 2
+        this.speedType = 'Flying'
+      } else if (element == "Mighty Flight") {
+        this.AC += 3
+        this.speedType = 'Flying'
+      } else if (element == "Fast") {
+        this.speed += 10
+      } else if (element == "VeryFast") {
+        this.speed += 20
+      } else if (element == "TemporallyFast") {
+        this.speed += 40
+      } else if (element == "Immobile") {
+        this.speed = 0
+      } else if (element == 'Psychic Flight'){
+        this.speedType = '| 30ft Flying'
+      } else if (element == 'Agile'){
+        this.AC +=2
+      } else if (element == 'Slow'){
+        this.speed -= 10
+      }
+      return this._rawTraits
+    });
+
+
+  },
+
+
     generateReaper: function () {
-      this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3))
+    numOfHeads: 0,
+    this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3, 'Heads'))
       this.head = this.multiPart(this._head)
       this.headTraits = this.multiPartTraits(this._head)
       this.headActions = this.multiPartActions(this._head)
@@ -525,7 +598,7 @@ const app = new Vue({
       this.bodyTraits = this._body[0].traits
       this.bodyActions = this._body[0].actions
 
-      this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4))
+      this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4, 'Arms'))
       this.arms = this.multiPart(this._arms)
       this.armsTraits = this.multiPartTraits(this._arms)
       this.armsActions = this.multiPartActions(this._arms)
@@ -540,8 +613,9 @@ const app = new Vue({
       this.challengeRating = this.challengeRating,
      
 
-      this._traits = this.traitCollector()
-      this.traits = this._traits
+      this._rawTraits = this.traitCollector()
+      this.traitApplier()
+      this.traits = this._rawTraits
       
       this.allActions = this.actionCollector()
       this._actions = this.actionWriter()
@@ -569,8 +643,7 @@ const app = new Vue({
         cha: this.cha,
         sol: this.sol,
         size: this.size,
-        HP: this.HP,
-        AC: this.AC,
+  
         name: this.name,
         CR: this.challengeRating,
 
@@ -590,6 +663,12 @@ const app = new Vue({
 
         traits: this.traits,
         actions: this.actions,
+
+        speed: this.speed,
+        speedType: this.speedType,
+
+        HP: this.HP,
+        AC: this.AC,
       }
       return monster
     },

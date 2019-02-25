@@ -48,7 +48,7 @@ export const allTraits = {
  darkVision : 'Darkvision: Can see in the dark',
  trueSight :
   'Truesight: Can see regardless of darkness or magic. Can also see into the void.',
- blind : 'Blind: perception set to 0',
+ blind : 'Blind: Disadvantage on all perception rolls.',
 
  flaming :
   'Flaming: if a player touches or makes a melee attack against this creature, they take D10 fire damage.',
