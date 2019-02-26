@@ -139,6 +139,7 @@ zarashArm       : new Part('Arm', 'Zarash Cannon', 'STR', 20 , [null], [A.zarash
 boneArm         : new Part('Arm', 'Bone', 'STR', 4 , [T.fragile, T.armable], [A.claw]),
 unstableArm     : new Part('Arm', 'Unstable', 'STR', 9 , [T.explosiveEnd, T.armable], [null]),
 ompithArm       : new Part('Arm', 'Ompith Claw', 'STR', 7 , [T.pincer], [A.claw]),
+crossbowArm     : new Part('Arm', 'Human', 'DEX', 20000 , [T.armable], [A.handXbow]),
 
 
 noLegs          : new Part('Legs', 'No', 'DEX', 1 , [T.immobile], [null]),

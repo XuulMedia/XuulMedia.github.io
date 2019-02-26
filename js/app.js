@@ -29,7 +29,7 @@ const app = new Vue({
   el: '#app',
 
   data: {
-    noFirstRoll: false,
+    firstRoll: false,
     soul: true,
     rolled: false,
     devloperMode: false,
@@ -39,7 +39,7 @@ const app = new Vue({
 
     speed: 30,
     speedType: '',
-    
+
 
     numOfHeads: 0,
     numOfArms: 0,
@@ -55,10 +55,24 @@ const app = new Vue({
     overrideCha: false,
     overrideSol: false,
 
-    overrideHP:false,
-    overrideAC:false,
+    overrideHP: false,
+    overrideAC: false,
 
-    name: 'Reaper',
+    bufferStr: false,
+    bufferDex: false,
+    bufferCon: false,
+    bufferInt: false,
+    bufferWis: false,
+    bufferCha: false,
+    bufferSol: false,
+    bufferHP: false,
+    bufferAC: false,
+
+    bufferName: '',
+    specialName: false,
+
+    name: '',
+    lastName: 'Reaper',
 
     str: { set: function () { return this._str } },
     dex: { set: function () { return this._dex } },
@@ -69,8 +83,8 @@ const app = new Vue({
     sol: { set: function () { return this._sol } },
 
     size: 'Medium',
-    HP: 10,
-    AC: 10,
+    HP: { set: function () { return this._HP } },
+    AC: { set: function () { return this._AC } },
 
     head: '',
     body: '',
@@ -82,11 +96,12 @@ const app = new Vue({
     armsTraits: '',
     legsTraits: '',
 
-    
+    checkBoxAllowed: false,
 
 
     traits: '',
     actions: '',
+
 
   },
   computed: {
@@ -101,13 +116,41 @@ const app = new Vue({
   },
 
   methods: {
-    _str: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
-    _dex: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
-    _con: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
-    _int: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
-    _wis: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
-    _cha: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
-    _sol: function () { if (this.firstRoll == true) { return dice(20) } else { return 10 } },
+    _str: function () {
+      let output
+      if (this.firstRoll == true) { output = dice(20) } else { output = 10 }
+      return output
+    },
+    _dex: function () {
+      let output
+      if (this.firstRoll == true) { output = dice(20) } else { output = 10 }
+      return output
+    },
+    _con: function () {
+      let output
+      if (this.firstRoll == true) { output = dice(20) } else { output = 10 }
+      return output
+    },
+    _int: function () {
+      let output
+      if (this.firstRoll == true) { output = dice(20) } else { output = 10 }
+      return output
+    },
+    _wis: function () {
+      let output
+      if (this.firstRoll == true) { output = dice(20) } else { output = 10 }
+      return output
+    },
+    _cha: function () {
+      let output
+      if (this.firstRoll == true) { output = dice(20) } else { output = 10 }
+      return output
+    },
+    _sol: function () {
+      let output
+      if (this.firstRoll == true) { output = dice(20) } else { output = 10 }
+      return output
+    },
 
     _strMod: function () { return calcAttributeMod(this.str) },
     _dexMod: function () { return calcAttributeMod(this.dex) },
@@ -116,6 +159,15 @@ const app = new Vue({
     _wisMod: function () { return calcAttributeMod(this.wis) },
     _chaMod: function () { return calcAttributeMod(this.cha) },
     _solMod: function () { return calcAttributeMod(this.sol) },
+
+    _HP: function () { if (this.firstRoll == true) { return calcHP() } else { return 10 } },
+    _AC: function () { if (this.firstRoll == true) { return calcAC() } else { return 10 } },
+
+    checkBoxTest: function () {
+      if (firstRoll == false || rolled == false) {
+        return false
+      }
+    },
 
     toggleSoul: function () {
       soul = !soul
@@ -127,7 +179,7 @@ const app = new Vue({
       }
     },
     rollTheDice: function () {
-      this.noFirstRoll = true
+      this.firstRoll = true
       if (this.overrideStr == false || this.str <= 0 || this.str == "") {
         this.str = dice(20)
       }
@@ -149,11 +201,17 @@ const app = new Vue({
       if (this.overrideSol == false || this.sol <= 0 || this.sol == "") {
         this.sol = dice(20)
       }
+      if (this.overrideAC == false) {
+        this.AC = this.calcAC()
+      }
+      if (this.overrideHP == false) {
+        this.HP = this.calcHP()
+      }
 
 
       this.size = this.calcSize()
-      this.HP = this.calcHP()
-      this.AC = this.calcAC()
+
+
 
     },
 
@@ -220,11 +278,40 @@ const app = new Vue({
       return baseAC
     },
 
+
     confirmTheRoll: function () {
-      this.noFirstRoll = false
+      this.firstRoll = false
       this.rolled = !this.rolled
       this.speedType = ''
       this.speed = 30
+
+      this.bufferStr = this.overrideStr
+      this.bufferDex = this.overrideDex
+      this.bufferCon = this.overrideCon
+      this.bufferInt = this.overrideInt
+      this.bufferWis = this.overrideWis
+      this.bufferCha = this.overrideCha
+      this.bufferSol = this.overrideSol
+      this.bufferHP = this.overrideHP
+      this.bufferAC = this.overrideAC
+
+      if (this.name != '') {
+        this.bufferName = this.name
+        this.specialName = true
+      }
+
+
+
+      this.overrideStr = false
+      this.overrideDex = false
+      this.overrideCon = false
+      this.overrideInt = false
+      this.overrideWis = false
+      this.overrideCha = false
+      this.overrideSol = false
+
+      this.overrideHP = false
+      this.overrideAC = false
 
     },
 
@@ -459,8 +546,16 @@ const app = new Vue({
         rarityArray.push(rare)
       });
 
-
       chosenName = allParts[this.indexOfMax(rarityArray)].name + ' ' + allParts[this.indexOfMax(rarityArray)].type
+      if (this.specialName == true) {
+        chosenName = this.bufferName
+
+        if (this.bufferName.toUpperCase() == 'SABBON') {
+          chosenName = 'Sabbon the Fallen '
+          this.lastName = ''
+        }
+
+      }
 
       return chosenName
     },
@@ -536,8 +631,7 @@ const app = new Vue({
 
       this._rawTraits.forEach(ele => {
         let element = ele.split(":", 1)
-        console.log('element' + element)
-
+        
         if (element == "Frail") {
           this.HP -= 5
         } else if (element == "Vigor") {
@@ -559,7 +653,7 @@ const app = new Vue({
         } else if (element == "Weak Flight") {
           this.AC -= 2
           this.speedType = 'Flying'
-        }else if (element == "Mighty Flight") {
+        } else if (element == "Mighty Flight") {
           this.AC += 2
           this.speedType = 'Flying'
         } else if (element == "Flight") {
@@ -578,56 +672,100 @@ const app = new Vue({
           this.AC += 2
         } else if (element == 'Slow') {
           this.speed -= 10
-        } 
+        }
         return this._rawTraits
       });
 
 
     },
 
+ 
+
     generateReaper: function () {
-      this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3, 'Heads'))
+      let code = this.bufferName.toUpperCase()
+
+      switch (code) {
+        case 'SABBON':
+        this._head = [allParts.handsomeHead]
+        this._body = [allParts.healthyBody]
+        this._arms = [allParts.crossbowArm, allParts.soulArm]
+        this._legs = [allParts.goatLegs]
+        this.size = 'Medium'
+          break;
+      
+        default:
+        this._head = this.selectPart(partCategorizer('Head'), this.rollForMultiLimb(3, 'Heads'))
+        this._body = this.selectPart(partCategorizer('Body'))
+        this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4, 'Arms'))
+        this._legs = this.selectPart(partCategorizer('Legs'))
+        
+          break;
+      }
+
       this.head = this.multiPart(this._head)
       this.headTraits = this.multiPartTraits(this._head)
       this.headActions = this.multiPartActions(this._head)
 
-      this._body = this.selectPart(partCategorizer('Body'))
       this.body = this._body[0].name + ' ' + this._body[0].type
       this.bodyTraits = this._body[0].traits
       this.bodyActions = this._body[0].actions
 
-      this._arms = this.selectPart(partCategorizer('Arm'), this.rollForMultiLimb(4, 'Arms'))
+    
       this.arms = this.multiPart(this._arms)
       this.armsTraits = this.multiPartTraits(this._arms)
       this.armsActions = this.multiPartActions(this._arms)
 
-      this._legs = this.selectPart(partCategorizer('Legs'))
       this.legs = this._legs[0].name + ' ' + this._legs[0].type
       this.legsTraits = this._legs[0].traits
       this.legsActions = this._legs[0].actions
 
       this._name = this.selectReaperName()
+
       this.name = this._name
+
       this.challengeRating = this.challengeRating,
-      this.speedType =  this.speedType
+        this.speedType = this.speedType
       this.speed = this.speed
 
+      switch (code) {
+        case 'SABBON':
+        this._rawTraits = this.traitCollector()
+        this.allActions = this.actionCollector()
+        break;
+      
+        default:
+        this._rawTraits = this.traitCollector()
+        this.allActions = this.actionCollector()
+          break;
+      }
 
-      this._rawTraits = this.traitCollector()
+
+      
       this.traitApplier()
       this.traits = this._rawTraits
 
-      this.allActions = this.actionCollector()
+      
       this._actions = this.actionWriter()
-      console.log(this.actions + 'actions')
       this.actions = this._actions
 
       let creature = this.createReaperCard()
       this.reapers[this.numOfReapers] = creature
 
       this.numOfReapers++
-      this.noFirstRoll = false
+      this.firstRoll = false
       this.rolled = false
+
+      this.name = ''
+      this.lastName = 'Reaper'
+      this.overrideStr = this.bufferStr
+      this.overrideDex = this.bufferDex
+      this.overrideCon = this.bufferCon
+      this.overrideInt = this.bufferInt
+      this.overrideWis = this.bufferWis
+      this.overrideCha = this.bufferCha
+      this.overrideSol = this.bufferSol
+      this.overrideHP = this.bufferHP
+      this.overrideAC = this.bufferAC
 
 
     },
@@ -645,6 +783,7 @@ const app = new Vue({
           size: this.size,
 
           name: this.name,
+          lastName: this.lastName,
           CR: this.challengeRating,
 
           strMod: this.strMod,
@@ -674,7 +813,7 @@ const app = new Vue({
     },
 
     reset: function () {
-      this.noFirstRoll = false
+      this.firstRoll = false
       this.rolled = false
       this.overrideStr = false
       this.overrideDex = false
@@ -697,6 +836,11 @@ const app = new Vue({
       this.wis = null
       this.cha = null
       this.sol = null
+      this.HP = null
+      this.AC = null
+      this.reapers = []
+      this.name = ''
+      this.specialName = false
 
       this.strMod = null
       this.dexMod = null

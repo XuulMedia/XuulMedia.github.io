@@ -19,52 +19,73 @@
 
 <body>
   <header>
-    <h1 class="bold">Xuul Media</h1>
+    <h1 class="bold header">Xuul Media</h1>
   </header>
   <div id="app" class="wrapper">
     <main>
-      <h2>Reaper Generator</h2>
+      <h2 class="center bold">Reaper Generator</h2>
+      <hr>
     
       <div class="control-panel">
-        <div class="control-container">
+        <div class="control-panel-section right-div">
 
-          
+          <table class="control-panel-table">
+            <tr>
+              <th> <label for="Toggle Soul">Enable Soul?</label></th>
+              <td> <input class="checkbox" type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked></td>
+            </tr>
+            <tr>
+                <th><label for="challengeRating">Challenge Rating</label></th>
+                <td><select class="dropdown" v-model="challengeRating" v-bind:disabled="rolled" id="crLevel">
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option selected="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                  </select></td>
+              </tr>
+          </table>
         
-        <label for="Toggle Soul">
-        <input class="checkbox" type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled" checked>
-        Enable Soul?</label>
-          <br>
-        <label for="challengeRating">
-          <select class="dropdown" v-model="challengeRating" v-bind:disabled="rolled" id="crLevel">
-            <option value="1">01</option>
-            <option value="2">02</option>
-            <option value="3">03</option>
-            <option value="4">04</option>
-            <option selected="5">05</option>
-            <option value="6">06</option>
-            <option value="7">07</option>
-            <option value="8">08</option>
-            <option value="9">09</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-          </select>
-          Challenge Rating</label>
+      
+        
         </div>
-        <div class="control-container">
-        <button class="button" v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
-        <button class="button" v-on:click="confirmTheRoll" v-bind:disabled="!noFirstRoll">Confirm Roll</button>
-        <button class="button" v-on:click="generateReaper" v-bind:disabled="!rolled">Generate Reaper</button>
-        <button class="button" v-on:click="reset">Reset</button>
+
+
+        <div class="control-panel-section left-div">
+          <table class="control-panel-table">
+            <tr>
+              <td>
+                <button class="button" v-on:click="rollTheDice" v-bind:disabled="rolled">Roll the Dice</button>
+                <button class="button" v-on:click="confirmTheRoll" v-bind:disabled="!firstRoll">Confirm Roll</button>
+                <button class="button" v-on:click="generateReaper" v-bind:disabled="!rolled">Generate Reaper</button>
+                <button class="button reset" v-on:click="reset">Reset</button></td>
+
+            </tr>
+            <tr>
+              <td><input type="text" name="reaperNamer" class="Reaper-namer" placeholder="Optional: Name your Reaper" v-model="name" v-bind:disabled="rolled"></td>
+
+            </tr>
+
+          </table>
       </div>
+
+
+       
       </div>
       <div class="wrapper-internal">
         <div class="stat-container">
@@ -82,7 +103,7 @@
             <tr>
               <td>DEX</td>
               <td><input type="number" name="DEX" id="DEX" min=1 max=20 v-model="dex" v-bind:disabled="!overrideDex"></td>
-              <td><input type="checkbox" v-model="overrideDex" v-bind:disabled="rolled"></td>
+              <td><input type="checkbox" v-model="overrideDex" v-bind:disabled="rolled" v-bind:disabled="!firstRoll"></td>
             </tr>
             <tr>
               <td>CON</td>
@@ -138,12 +159,12 @@
           <p> alltraits = {{traits}} </p>
         </div>
       </div>
-      <h3>Reapers</h3>
-      <br>
+      <h3 class="center bold">Reapers</h3>
+      <hr>
       <div class="reaper-card-deck" >
           <div v-for="index of reapers">
             <div class="card">
-              <h4 class="card-title">{{index.name}} Reaper  <span>CR: {{index.CR}}</span></h4>
+              <h4 class="card-title">{{index.name}} {{index.lastName}}  <p class="left inline">CR: {{index.CR}}</p></h4>
               <h6 class="card-subtitle">{{index.size}} Demon, Chaotic Evil</h6>
               <hr />
               <div class="card-text"> 
@@ -152,7 +173,7 @@
                 <p> Speed: {{index.speed}} {{index.speedType}}</p>
               </div>
               <hr />
-              <table>
+              <table class="card-table">
                 <thead>
                   <tr>
                   <th>STR</th>
@@ -232,9 +253,9 @@
 
  
 
-
+  <br>
   <footer>
-    <h6>Copyright Travis Pierce 2019</h6>
+    <h6 class="copyright">Copyright Travis Pierce 2019</h6>
   </footer>
   </div>
 </body>
