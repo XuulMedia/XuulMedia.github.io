@@ -691,6 +691,7 @@ const app = new Vue({
         this._arms = [allParts.crossbowArm, allParts.soulArm]
         this._legs = [allParts.goatLegs]
         this.size = 'Medium'
+        this.dex = 16
           break;
       
         default:
@@ -730,11 +731,14 @@ const app = new Vue({
       switch (code) {
         case 'SABBON':
         this._rawTraits = this.traitCollector()
+        this._rawTraits.push(allParts.rottenBody.traits[0])
+    
         this.allActions = this.actionCollector()
         break;
       
         default:
         this._rawTraits = this.traitCollector()
+      
         this.allActions = this.actionCollector()
           break;
       }
@@ -755,8 +759,11 @@ const app = new Vue({
       this.firstRoll = false
       this.rolled = false
 
+      this.specialName = false
       this.name = ''
+      this.bufferName = ''
       this.lastName = 'Reaper'
+
       this.overrideStr = this.bufferStr
       this.overrideDex = this.bufferDex
       this.overrideCon = this.bufferCon
@@ -840,6 +847,7 @@ const app = new Vue({
       this.AC = null
       this.reapers = []
       this.name = ''
+      this.bufferName = ''
       this.specialName = false
 
       this.strMod = null

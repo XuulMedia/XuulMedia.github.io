@@ -88,7 +88,7 @@ export const allTraits = {
   "Soul's command: This creature can command the souls of others. Any creature that communicates with this creature will be tempted to followe the commanders bidding unless they pass a pass a SOL or CHA (DC12) test.",
 
  stench :
-  'Stench: Any creature that starts its turn within 15ft. of this creature must make a itution(DC5) Save or be poisoned.',
+  'Stench: Any creature that starts its turn within 15ft. of this creature must pass a CON (DC6) test or take D6 posion damage. Sucessful saves take no damage.',
  explosiveEnd :
   'Explosive End: When this creature dies it explodes in a bloody heap dealing 3D10 pierceing damage to all who fail a DC 13 Dexterity saving throw.',
 
