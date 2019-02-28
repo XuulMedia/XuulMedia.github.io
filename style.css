@@ -1,9 +1,10 @@
 :root {
+    /* keep all colors, these are a scaled palet in order */
     --New-Swatch: #030A22;
     --New-Swatch: #0D1845;
-    --New-Swatch: #1D2C67;
-    --New-Swatch: #33448A;
-    --New-Swatch: #4F62AD;
+    --Tertiary-Background: #1D2C67;
+    --Main-Background: #33448A;
+    --Secondary-Background: #4F62AD;
     --New-Swatch: #7184D0;
     --New-Swatch: #9AACF2;
 
@@ -16,14 +17,16 @@
 /* Main Sections */
 
 body {
-  font-family: 'Libre Franklin', sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   box-sizing: border-box;
   margin: 0;
+  float: none;
+  overflow: visible
   
 }
 
 header {
-  background-color: #33448A;
+  background-color: var(--Main-Background);
   height: 3rem;
   color: white;
   min-width: 450px;
@@ -37,17 +40,19 @@ main {
   min-width: 340px;
   /* box-shadow: 3px 3px 15px gray; */
   min-width: 450px;
+  grid-column: content;
 }
 
 aside {
-  background-color: #4F62AD;
+  background-color: var(--Secondary-Background);
   padding: 0 2rem;
   color: lightgray;
+  grid-column: sidebar;
   
 }
 
 footer {
-background-color: #1D2C67;
+background-color: var(--Tertiary-Background);
 color: lightgray;
 grid-column: span 2;
 height: 4rem;
@@ -165,7 +170,7 @@ margin: 0;
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4F62AD;
+  background-color: var(--Secondary-Background);
   color: white;
   text-align: center;
 }
@@ -219,7 +224,7 @@ margin: 0;
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  /* background-color: #4F62AD;
+  /* background-color: var(--Secondary-Background);
   color: white; */
   text-align: center;
   
@@ -235,9 +240,9 @@ margin: 0;
 /* Wrappers */
 .wrapper {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: [content] 3fr [sidebar] 1fr;
   grid-gap: 10px;
-  border: 1px solid #bbb;
+  /* border: 1px solid green; */
   margin: auto;
 }
 
@@ -262,15 +267,13 @@ margin: 0;
   grid-column-gap: 10px;
   grid-row-gap: 15px;
   min-width: 370px;
-  float:none
-
 }
 
 .card {
   border: black 1px solid;
   min-width: 370px;
   padding: 5px;
-}
+  }
 
 .card-table {
   text-align: center;
@@ -348,9 +351,47 @@ a {
 
 @media print  
 {
-    .card{
-        page-break-inside: avoid;
-        page-break-before: always;
-        page-break-after: always;
+  * {
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .no-print{
+    display:none;
+  }
+
+  .reaper-card-deck {
+    display: contents;
+  }
+  
+  .card{
+    background: transparent !important;
+    color: #000 !important; 
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    page-break-inside: avoid;
+    margin-bottom: 5px;
+    margin: 5px;
+    display:inline-block;
+    font-size: 12px;
+    font-family:  Georgia, 'Times New Roman', serif; 
+    max-width: 51%;
+    width: 45%;
+    min-width: 40%;
+    max-height: 51%;
+    height: 45%;
+    min-height: 40%;
+      
     }
+
+    .reaper-stat{
+      font-size: 11;
+
+    }
+    @page {
+      margin: 5px;
+  }
+  
 }

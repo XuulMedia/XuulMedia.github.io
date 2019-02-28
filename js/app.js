@@ -628,6 +628,7 @@ const app = new Vue({
     },
 
     traitApplier: function () {
+      let cha = this.chaMod
 
       this._rawTraits.forEach(ele => {
         let element = ele.split(":", 1)
@@ -672,6 +673,8 @@ const app = new Vue({
           this.AC += 2
         } else if (element == 'Slow') {
           this.speed -= 10
+        } else if (element == 'Demonic Charm'){
+          this.AC = parseInt(cha) + parseInt(this.AC)
         }
         return this._rawTraits
       });
@@ -692,6 +695,7 @@ const app = new Vue({
         this._legs = [allParts.goatLegs]
         this.size = 'Medium'
         this.dex = 16
+        this.cha = (10 + dice(10))
           break;
       
         default:

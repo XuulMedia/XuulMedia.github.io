@@ -57,7 +57,7 @@ const stinger = new MeleeWeapon('Stinger', '1D10', 'STR', 10, ' Piercing. Target
 
 const spit = new RangeWeapon('Spit', '1D6', 'DEX', '15/30', 'Acid')
 const handXbow = new RangeWeapon('Hand Crossbow', '1D6', 'DEX', '60/300', 'Piercing.')
-const zarashCannon = new RangeWeapon('Zarash Cannon', '8D10', 'STR -5', '600/2000', 'Bludgeoning')
+const zarashCannon = new RangeWeapon('Zarash Cannon', '8D10', 'STR', '600/2000', 'Bludgeoning')
 
 const wail = new Spell('Wail', '5-6', 'A focused wail rips through the air. Any creature within 30 feet that can hear must take a Constitution(DC12) save or take 2D8 Thunder Damage. Successful saves take half damage.')
 const soulBlast = new Spell('Soul Blast', '5-6', "A focused blast of pure soul shoots from this creature hitting a target within 30 with a +8 to hit. Hit: 2d6 + 8 Force. The target must take a Soul(DC12) saving throw or they will lose 1 soul until a long rest.")
