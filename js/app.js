@@ -70,6 +70,7 @@ const app = new Vue({
 
     bufferName: '',
     specialName: false,
+    alignment: 'Chaotic Evil',
 
     name: '',
     lastName: 'Reaper',
@@ -553,7 +554,14 @@ const app = new Vue({
         if (this.bufferName.toUpperCase() == 'SABBON') {
           chosenName = 'Sabbon the Fallen '
           this.lastName = ''
-        }
+          this.alignment = 'Lawful Evil'
+          
+        } else if (this.bufferName.toUpperCase() == 'BEAST' || this.bufferName.toUpperCase() == 'THE BEAST' ) {
+          chosenName = 'The Beast '
+          this.lastName = ''
+
+          
+        } 
 
       }
 
@@ -696,6 +704,7 @@ const app = new Vue({
         this.size = 'Medium'
         this.dex = 16
         this.cha = (10 + dice(10))
+        this.alignment = 'Lawful Evil'
           break;
       
         default:
@@ -767,6 +776,7 @@ const app = new Vue({
       this.name = ''
       this.bufferName = ''
       this.lastName = 'Reaper'
+      this.alignment = 'Chaotic Evil'
 
       this.overrideStr = this.bufferStr
       this.overrideDex = this.bufferDex
@@ -796,6 +806,7 @@ const app = new Vue({
           name: this.name,
           lastName: this.lastName,
           CR: this.challengeRating,
+          alignment: this.alignment,
 
           strMod: this.strMod,
           dexMod: this.dexMod,
@@ -851,6 +862,7 @@ const app = new Vue({
       this.AC = null
       this.reapers = []
       this.name = ''
+      this.alignment = 'Chaotic Evil'
       this.bufferName = ''
       this.specialName = false
 
@@ -865,56 +877,5 @@ const app = new Vue({
 
 
   },
-}
-)
-
-Vue.component('reaper-card', {
-  template: `
-  <div class="card">
-          <h5 class="card-title"">{{index.Reaper-Name}}</h5>
-          <h6 class="card-subtitle">{{index.size}} Demon, Chaotic Evil</h6>
-          <hr />
-          <div class="card-text"> 
-            <p> Armor Class: {{index.AC}}</p>
-            <p> Hit Points: {{index.HP}}</p>
-            <p> Speed: {{index.speed}} {{speedType}}</p>
-          </div>
-          <hr />
-          <table>
-            <thead>
-              <tr>
-              <th>STR</th>
-              <th>DEX</th>
-              <th>CON</th>
-              <th>INT</th>
-              <th>WIS</th>
-              <th>CHA</th>
-              <th v-if='soul'>SOL</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{index.str}} ( {{index.strMod}} ) </td>
-                <td>{{index.dex}} ( {{index.dexMod}} ) </td>
-                <td>{{index.ion}} ( {{index.conMod}} ) </td>
-                <td>{{index.int}} ( {{index.intMod}} ) </td>
-                <td>{{index.wis}} ( {{index.wisMod}} ) </td>
-                <td>{{index.cha}} ( {{index.chaMod}} ) </td>
-                <td v-if='soul'>{{index.sol}} ( {{index.solMod}} ) </td>
-              </tr>
-            </tbody>
-          </table>
-          <hr />
-          <div class="trait-action">
-            <p>{{index.traits}}</p>
-            <p>{{index.actions}}</p>
-            <br>
-            <p>{{index.parts}}</p>
-          </div>
-      </div>
-  `,
-  data: function () {
-
-  }
 }
 )

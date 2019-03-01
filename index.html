@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script type="module">
     import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.esm.browser.js'
@@ -31,7 +32,12 @@
 
           <table class="control-panel-table">
             <tr>
-              <th> <label for="Toggle Soul">Enable Soul?</label></th>
+              <th> <label for="Toggle Soul">Enable <span><select class="sevenStat" v-bind:disabled="rolled"
+                      id="solType">
+                    <option selected="1">Soul</option>
+                    <option value="2">(WIP)</option>
+                  </select>
+                  </span>?</label></th>
               <td> <input class="checkbox" type="checkbox" name="Toggle Soul" v-model="soul" v-bind:disabled="rolled"
                   checked></td>
             </tr>
@@ -141,6 +147,9 @@
               <td><input type="checkbox" v-model="overrideSol" v-bind:disabled="rolled"> </td>
             </tr>
             <tr>
+              <td> </td>
+            </tr>
+            <tr>
               <td>Health</td>
               <td><input type="number" name="HP" id="HP" min=1 max=400 v-model="HP" v-bind:disabled="!overrideHP"></td>
               <td><input type="checkbox" v-model="overrideHP" v-bind:disabled="rolled"> </td>
@@ -176,7 +185,7 @@
 
           <h4 class="card-title">{{index.name}} {{index.lastName}} <p class="left-div inline">CR: {{index.CR}}</p>
           </h4>
-          <h6 class="card-subtitle">{{index.size}} Demon, Chaotic Evil</h6>
+          <h6 class="card-subtitle">{{index.size}} Demon, {{alignment}} </h6>
           <hr />
           <div class="card-text">
             <p> Armor Class: {{index.AC}}</p>
@@ -221,9 +230,10 @@
         </div>
 
       </div>
-      <!-- <div v-for="index of reapers">
+      <div v-for="index of reapers">
           <textarea name="" id="" cols="30" rows="10">
-> ##{{index.name}} {{index.lastName}}
+___
+> ## {{index.name}} {{index.lastName}}
 >*{{index.size}} Demon, Chaotic Evil*
 > ___
 > - **Armor Class** {{index.AC}}
@@ -232,7 +242,7 @@
 > ___
 >|STR|DEX|CON|INT|WIS|CHA|
 >|:---:|:---:|:---:|:---:|:---:|:---:|
->|{{index.str}} {{index.strMod}}|{{index.dex}} {{index.dexMod}}|{{index.con}} {{index.conMod}}|{{index.int}} {{index.intMod}}|{{index.wis}} {{index.wisMod}}|{{index.cha}} {{index.chaMod}}|
+>|{{index.str}} ({{index.strMod}})|{{index.dex}} {{index.dexMod}}|{{index.con}} {{index.conMod}}|{{index.int}} {{index.intMod}}|{{index.wis}} {{index.wisMod}}|{{index.cha}} {{index.chaMod}}|
 >___
 > - **Condition Immunities** groovy, swagged
 > - **Senses** passive Perception 10
@@ -249,49 +259,50 @@
 
 
           </textarea>
-        </div> -->
+        </div>
 
-  </main>
-  <aside class="no-print">
-    <h3>About</h3>
-    <p>The Reaper Generator is my first coding project in Javascript. This generator is version 2, using more elegant
-      coding and custom CSS.</p>
-    <p>Reapers are based on the monsters from the up and coming video game <a href="https://www.shoelacegames.com/"
-        target="new">Catacombs</a></p>
+    </main>
+    <aside class="no-print">
+      <h3>About</h3>
+      <p>The Reaper Generator is my first coding project in Javascript. This generator is version 2, using more elegant
+        coding and custom CSS.</p>
+      <p>Reapers are based on the monsters from the up and coming video game <a href="https://www.shoelacegames.com/"
+          target="new">Catacombs</a></p>
+      <br>
+      <h4>What are Reapers?</h4>
+      <p>Reapers are the lowest and most common form of demons in the realm of Glenora. A reaper is essentially a
+        randomly built assortment of parts assembled in a fleshworks. The skills and abilities of a reaper varies wildly
+        depending on the skill of the creature that assembled it and the power of the demon soul within the body.</p>
+      <p>Due to the random nature of reapers, this generator will use true randomness to 'assemble' a reaper, using
+        pools of available parts (each with their own traits and actions) as well as randomized statistic rolls for use
+        in a D20 style RPG. Higher stat rolls increase the number of possible limbs (higher numbers allow more powerful
+        features to be chosen), but due to the still random nature of a reaper this still leaves the possiblility of a
+        'suboptimal' body part being chosen.</p>
+      <p>This system is almost certianly imbalanced for play, but I have personally found it adds an element of
+        uncertianty when added to an adventure. Players will never know if this reaper is one they can easily defeat or
+        a powerful foe that would best be avoided.
+        <p>For those seeking a more tailored experience the generator permits overriding of some statistics, however
+          this still only opens up the pool of parts to the specified level. Your reaper still may end up weak if the
+          'dice' roll poorly for part selection. If you want balance, then it is up to you as a DM to only use the
+          reapers
+          you think will fit the situation.</p>
+        <p>Possible Future plans for this generator include
+          <ul>
+            <li>A password or code system to unlock special custom tailored reapers</li>
+            <li>More variety of parts / traits / actions. Possibly adding new part types (tails?)</li>
+            <li>Support for other '7th' statistc models such as insanity, ect...</li>
+          </ul>
+        </p>
+    </aside>
+
+
+
+
+
     <br>
-    <h4>What are Reapers?</h4>
-    <p>Reapers are the lowest and most common form of demons in the realm of Glenora. A reaper is essentially a
-      randomly built assortment of parts assembled in a fleshworks. The skills and abilities of a reaper varies wildly
-      depending on the skill of the creature that assembled it and the power of the demon soul within the body.</p>
-    <p>Due to the random nature of reapers, this generator will use true randomness to 'assemble' a reaper, using
-      pools of available parts (each with their own traits and actions) as well as randomized statistic rolls for use
-      in a D20 style RPG. Higher stat rolls increase the number of possible limbs (higher numbers allow more powerful
-      features to be chosen), but due to the still random nature of a reaper this still leaves the possiblility of a
-      'suboptimal' body part being chosen.</p>
-    <p>This system is almost certianly imbalanced for play, but I have personally found it adds an element of
-      uncertianty when added to an adventure. Players will never know if this reaper is one they can easily defeat or
-      a powerful foe that would best be avoided.
-      <p>For those seeking a more tailored experience the generator permits overriding of some statistics, however
-        this still only opens up the pool of parts to the specified level. Your reaper still may end up weak if the
-        'dice' roll poorly for part selection. If you want balance, then it is up to you as a DM to only use the reapers
-        you think will fit the situation.</p>
-      <p>Possible Future plans for this generator include
-        <ul>
-          <li>A password or code system to unlock special custom tailored reapers</li>
-          <li>More variety of parts / traits / actions. Possibly adding new part types (tails?)</li>
-          <li>Support for other '7th' statistc models such as insanity, ect...</li>
-        </ul>
-      </p>
-  </aside>
-
-
-
-
-
-  <br>
-  <footer class="no-print">
-    <h6 class="copyright">Copyright Travis Pierce 2019</h6>
-  </footer>
+    <footer class="no-print">
+      <h6 class="copyright">Copyright Travis Pierce 2019</h6>
+    </footer>
   </div>
 </body>
 
