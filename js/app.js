@@ -33,6 +33,7 @@ const app = new Vue({
     soul: true,
     rolled: false,
     devloperMode: false,
+    homebrew: false,
 
     numOfReapers: 0,
     reapers: [],
@@ -767,6 +768,7 @@ const app = new Vue({
 
       let creature = this.createReaperCard()
       this.reapers[this.numOfReapers] = creature
+      this.number= this.numOfReapers
 
       this.numOfReapers++
       this.firstRoll = false
@@ -807,6 +809,7 @@ const app = new Vue({
           lastName: this.lastName,
           CR: this.challengeRating,
           alignment: this.alignment,
+          number: this.numOfReapers,
 
           strMod: this.strMod,
           dexMod: this.dexMod,
@@ -874,6 +877,10 @@ const app = new Vue({
       this.chaMod = null
       this.solMod = null
     },
+
+    copyReaper: function (index) {
+      document.getElementById(index)
+    }
 
 
   },

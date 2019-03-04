@@ -66,6 +66,10 @@
                   <option value="20">20</option>
                 </select></td>
             </tr>
+            <tr>
+              <th><label for="homebrew">Homebrew Markup</label></th>
+              <td><input type="checkbox" name="homebrew" v-model="homebrew" ></td>
+            </tr>
           </table>
         </div>
 
@@ -173,11 +177,14 @@
           <p> alltraits = {{traits}} </p>
         </div>
       </div>
+
+
+
       
       <h3 class="center bold no-print">Reapers</h3>
       <hr class="no-print">
       <div class="reaper-card-deck">
-        <div class="card" v-for="index of reapers">
+        <div class="card" v-for="index of reapers" v-if="!homebrew">
 
           <h4 class="card-title">{{index.name}} {{index.lastName}} <p class="left-div inline">CR: {{index.CR}}</p>
           </h4>
@@ -226,8 +233,9 @@
         </div>
 
       </div>
-      <div v-for="index of reapers">
-          <textarea name="" id="" cols="30" rows="10">
+      <div v-for="index of reapers" v-if="homebrew">
+        <!-- <button>Copy</button> -->
+          <textarea v-on:click="copyReaper"  v-bind:id="['reaper-' + index.number]" cols="50" rows="10">
 ___
 > ## {{index.name}} {{index.lastName}}
 >*{{index.size}} Demon, Chaotic Evil*
@@ -240,21 +248,25 @@ ___
 >|:---:|:---:|:---:|:---:|:---:|:---:|
 >|{{index.str}} ({{index.strMod}})|{{index.dex}} {{index.dexMod}}|{{index.con}} {{index.conMod}}|{{index.int}} {{index.intMod}}|{{index.wis}} {{index.wisMod}}|{{index.cha}} {{index.chaMod}}|
 >___
-> - **Condition Immunities** groovy, swagged
-> - **Senses** passive Perception 10
-> - **Languages** Gibberish
-> - **Challenge** {{index.CR}} (7813 XP)
+> - {{index.head}} | {{index.arms}} |
+> - {{index.body}} | {{index.legs}} |
 > ___
-> ***Enormous Nose.*** This creature gains advantage on any check involving putting things in its nose.
->
-> ***Enormous Nose.*** This creature gains advantage on any check involving putting things in its nose.
->
-> ***Fowl Appearance.*** While the creature remains motionless, it is indistinguishable from a normal chicken.
+> {{index.traits[0]}}
+> {{index.traits[1]}}
+> {{index.traits[2]}}
+> {{index.traits[3]}}
+> {{index.traits[4]}}
+> {{index.traits[5]}}
+> {{index.traits[6]}}
 > ### Actions
-> ***Heel Jawbreaker.*** *Melee Weapon Attack:* +4 to hit, reach 5ft., one target. *Hit* 5 (1d6 + 2) 
-
-
-          </textarea>
+> {{index.actions[0]}}
+> {{index.actions[1]}}
+> {{index.actions[2]}}
+> {{index.actions[3]}}
+> {{index.actions[4]}}
+> {{index.actions[5]}}
+> {{index.actions[6]}}
+</textarea>
         </div>
 
     </main>
@@ -263,7 +275,8 @@ ___
       <p>The Reaper Generator is my first coding project in Javascript. This generator is version 2, using more elegant
         coding and custom CSS.</p>
       <p>Reapers are based on the monsters from the up and coming video game <a href="https://www.shoelacegames.com/"
-          target="new">Catacombs</a></p>
+          target="new">Catacombs</a>.</p>
+      <p>This project contains a method to render the monsters in a format that should be compatible with <a href="https://homebrewery.naturalcrit.com/" target="new">The Homebrewery</a>.</p>
       <br>
       <h4>What are Reapers?</h4>
       <p>Reapers are the lowest and most common form of demons in the realm of Glenora. A reaper is essentially a
