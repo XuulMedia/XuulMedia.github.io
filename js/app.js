@@ -1,5 +1,5 @@
-import Vue from 'js/vue.min.js'
-import allParts from 'js/parts.js'
+import Vue from '/js/vue.min.js'
+import allParts from '/js/parts.js'
 
 
 const dice = function (sides) {
