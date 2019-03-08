@@ -848,12 +848,6 @@ const app = new Vue({
       this.overrideCha = false
       this.overrideSol = false
 
-
-      this.head = null
-      this.body = null
-      this.arms = null
-      this.legs = null
-
       this.str = null
       this.dex = null
       this.con = null
