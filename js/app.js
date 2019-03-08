@@ -863,6 +863,7 @@ const app = new Vue({
       this.sol = null
       this.HP = null
       this.AC = null
+      this. numOfReapers = 0
       this.reapers = []
       this.name = ''
       this.alignment = 'Chaotic Evil'
