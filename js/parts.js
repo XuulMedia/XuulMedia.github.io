@@ -1,5 +1,5 @@
-import {allTraits as T} from '/traits.js'
-import {allActions as A} from '/actions.js'
+import {allTraits as T} from '/js/traits.js'
+import {allActions as A} from '/js/actions.js'
 
 
 function capitalize(string) {
