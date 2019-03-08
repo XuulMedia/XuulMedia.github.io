@@ -1,4 +1,4 @@
-import Vue from '/js/vue.min.js'
+import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.esm.browser.min.js'
 import allParts from '/js/parts.js'
 
 
